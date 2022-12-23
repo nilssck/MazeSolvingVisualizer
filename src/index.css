@@ -1,9 +1,11 @@
 :root {
     /*https: //flatuicolors.com/palette/se*/
     --background: #1e272e;
+    --backgroundLight: #485460;
     --white: #d2dae2;
     --greenDark: #05c46b;
     --greenLight: #0be881;
+    --blueDark: #3c40c6;
 
 }
 
@@ -19,7 +21,32 @@ body {
 }
 
 
-.mainGrid{
+.brushButton{
+    background-color: var(--backgroundLight);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
+    justify-items: center;
+    align-items: center;
 
+    width: 250px;
+    height: 50px;
+    border-radius: 15px;
+    margin: 20px
+}
+
+.brushButtonItem{
+    border-radius: 15px;
+}
+
+.brushButtonItemSelected{
+    height: 100%;
+    width: 100%;
+
+    text-align: center;
+    line-height: 50px;
+
+    border-radius: 15px;
+
+    background-color: var(--blueDark);
 }
