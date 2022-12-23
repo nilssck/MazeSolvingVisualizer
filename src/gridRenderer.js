@@ -1,19 +1,18 @@
+import * as gridManager from "./gridManager.js"
+
 const canvas = document.getElementById("mainGrid");
 /** @type {CanvasRenderingContext2D} */
 const ctx = canvas.getContext("2d");
+ctx.strokeStyle = "#d2dae2";
 
 let mousePos = { x: 0, y: 0 };
 
-ctx.strokeStyle = "#d2dae2";
 
+const brushBtn = document.getElementById("brushBtn");
+const eraseBtn = document.getElementById("eraseBtn");
+let drawMode = "Draw";
 
-renderGrid();
-
-
-function fillCell(x, y) {
-    ctx.fillStyle = "#d2dae2";
-    ctx.fillRect(25 * x+1, 25 * y+1, 23, 23);
-}
+const debugText = document.getElementById("Debug")
 
 
 function renderGrid() {
@@ -27,10 +26,12 @@ function renderGrid() {
         }
     }
 }
+renderGrid();
 
 
 
 
+//Draw functionality
 canvas.addEventListener("mousemove", (e) => {
     //button pressed?
     if (e.buttons !== 1) return;
@@ -39,16 +40,50 @@ canvas.addEventListener("mousemove", (e) => {
 
 canvas.addEventListener("mousedown", draw)
 
-
 function draw(e) {
     //get position
     mousePos.x = e.x - canvas.getBoundingClientRect().left;
     mousePos.y = e.y - canvas.getBoundingClientRect().top;
 
+    //get cell
     let cell = {
         x: Math.floor(mousePos.x / 25),
         y: Math.floor(mousePos.y / 25)
     }
-    console.log(cell);
-    fillCell(cell.x, cell.y);
+
+    //draw or erase
+    if (drawMode == "Draw") {
+        fillCell(cell.x, cell.y, "#d2dae2");
+        gridManager.setWall(cell.x, cell.y)
+    }
+    else if (drawMode == "Erase") {
+        fillCell(cell.x, cell.y, "#1e272e");
+        gridManager.removeWall(cell.x, cell.y) 
+    }   
 }
+
+
+function fillCell(x, y, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(25 * x+1, 25 * y+1, 23, 23);
+}
+
+//Brush Button
+
+brushBtn.addEventListener("click", (e) => {
+    drawMode = "Draw";
+    brushBtn.classList.add("brushButtonItemSelected");
+    eraseBtn.classList.remove("brushButtonItemSelected");
+
+    debugText.innerHTML="Draw"
+    
+})
+
+eraseBtn.addEventListener("click", (e) => {
+    drawMode = "Erase";
+    brushBtn.classList.remove("brushButtonItemSelected");
+    eraseBtn.classList.add("brushButtonItemSelected");
+
+
+    debugText.innerHTML = "Erase";
+})

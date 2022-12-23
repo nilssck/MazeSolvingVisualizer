@@ -11,5 +11,12 @@ for (let i = 0; i < 24;i++) {
     }
 }
 
+function setWall(x, y) {
+    gridWalls[x][y] = 1;
+}
 
-console.info(gridWalls);
+function removeWall(x, y) {
+    gridWalls[x][y] = 0;
+}
+
+export { setWall, removeWall};

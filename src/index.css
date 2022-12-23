@@ -36,17 +36,15 @@ body {
 }
 
 .brushButtonItem{
-    border-radius: 15px;
-}
-
-.brushButtonItemSelected{
     height: 100%;
     width: 100%;
-
     text-align: center;
     line-height: 50px;
 
     border-radius: 15px;
+}
 
+.brushButtonItemSelected{
+    
     background-color: var(--blueDark);
 }
