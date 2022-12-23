@@ -1,7 +1,25 @@
+:root {
+    /*https: //flatuicolors.com/palette/se*/
+    --background: #1e272e;
+    --white: #d2dae2;
+    --greenDark: #05c46b;
+    --greenLight: #0be881;
+
+}
+
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
   margin: auto;
   max-width: 38rem;
   padding: 2rem;
+  background-color: var(--background);
+  color: var(--white);
+}
+
+
+.mainGrid{
+
+
 }
