@@ -10,6 +10,7 @@ let mousePos = { x: 0, y: 0 };
 
 const brushBtn = document.getElementById("brushBtn");
 const eraseBtn = document.getElementById("eraseBtn");
+const activeBrushSelector = document.getElementById("activeBrushSelector")
 let drawMode = "Draw";
 
 const debugText = document.getElementById("Debug")
@@ -72,18 +73,10 @@ function fillCell(x, y, color) {
 
 brushBtn.addEventListener("click", (e) => {
     drawMode = "Draw";
-    brushBtn.classList.add("brushButtonItemSelected");
-    eraseBtn.classList.remove("brushButtonItemSelected");
-
-    debugText.innerHTML="Draw"
-    
+    activeBrushSelector.classList.remove("brushSwitchSelectedToggled");
 })
 
 eraseBtn.addEventListener("click", (e) => {
     drawMode = "Erase";
-    brushBtn.classList.remove("brushButtonItemSelected");
-    eraseBtn.classList.add("brushButtonItemSelected");
-
-
-    debugText.innerHTML = "Erase";
+    activeBrushSelector.classList.add("brushSwitchSelectedToggled");
 })

@@ -21,30 +21,65 @@ body {
 }
 
 
-.brushButton{
+.brushSwitch{
     background-color: var(--backgroundLight);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    justify-items: center;
-    align-items: center;
-
-    width: 250px;
-    height: 50px;
+    width: 120px;
+    height: 60px;
     border-radius: 15px;
-    margin: 20px
+
+    margin: 20px;
+
+    position: relative;
+    z-index: 1;
+
 }
 
-.brushButtonItem{
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    line-height: 50px;
+.brushSwitchItem{
+    z-index: 3;
+    position: absolute;
+    top: 0px;
+    width: 60px;
+    height: 60px;
 
-    border-radius: 15px;
+    display: flex;
+    flex-wrap:wrap;
+    align-content: center;
+    justify-content: center;
+   
 }
 
-.brushButtonItemSelected{
-    
-    background-color: var(--blueDark);
+.brushSwitchItem > img{
+    width: 32px;
+    height: 32px;
+}
+
+.brushSwitchItemPencil{
+    left: 0px;
+}
+
+.brushSwitchItemEraser{
+    left: 60px;
+}
+
+.brushSwitchSelected{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    z-index: 2;
+    border-radius: 15px;
+
+    background-color: #3c40c6;
+    left:0px;
+    transition: 0.15s;
+
+}
+
+.brushSwitchSelectedToggled{
+    left: 60px;
+}
+
+
+#Debug{
+    font-size: 10px;
+    color: var(--backgroundLight);
 }

@@ -12,9 +12,24 @@
 
   <canvas class="mainGrid" id="mainGrid" width="600" height="400"></canvas>
 
-  <div class="brushButton">
+
+  <!--
+<div class="brushButton">
     <div class="brushButtonItem brushButtonItemSelected" id="brushBtn"> Draw </div>
     <div class="brushButtonItem" id="eraseBtn"> Erase </div>
+  </div>
+
+  -->
+
+
+  <div class="brushSwitch">
+    <div class="brushSwitchItem brushSwitchItemPencil" id="brushBtn">
+      <img src="icons/icons8-pencil-32.png" alt="Draw">
+    </div>
+    <div class="brushSwitchItem brushSwitchItemEraser" id="eraseBtn">
+      <img src="icons/icons8-erase-32.png" alt="Erase">
+    </div>
+    <div class="brushSwitchSelected" id="activeBrushSelector"></div>
   </div>
 
   <p id="Debug">Debug Text</p>
@@ -23,6 +38,5 @@
   <script src="gridManager.js" type="module"></script>
 
 
-</body>
 
 </html>
