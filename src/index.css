@@ -5,7 +5,9 @@
     --white: #d2dae2;
     --greenDark: #05c46b;
     --greenLight: #0be881;
+    --blueLight: #575fcf;
     --blueDark: #3c40c6;
+    --redDark: #ff3f34;
 
 }
 
@@ -14,11 +16,43 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
   margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
   background-color: var(--background);
   color: var(--white);
+  margin: 20px;
 }
+
+.layoutGrid{
+    display: grid;
+
+    grid-template-columns: 600px 200px;
+    align-content: center;
+    justify-content: center;
+
+}
+
+.inputRow{
+
+}
+
+button{
+    display: block;
+    width: 120px;
+    padding: 15px;
+    margin: 10px 20px;
+
+    border-radius: 15px;
+    border: none;
+
+    background-color: var(--backgroundLight);
+    color: var(--white);
+    font-size: 15px;
+}
+
+.burshButtonSelected{
+    color: var(--blueDark);
+}
+
+
 
 
 .brushSwitch{
