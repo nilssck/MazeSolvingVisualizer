@@ -10,11 +10,16 @@ const eraseBtn = document.getElementById("eraseBtn");
 const setStartBtn = document.getElementById("setStartBtn");
 const setEndBtn = document.getElementById("setEndBtn");
 const activeBrushSelector = document.getElementById("activeBrushSelector")
-const debugText = document.getElementById("Debug")
+const debugText = document.getElementById("Debug");
+
+const WHITE = "#d2dae2";
+const BLACK = "#1e272e";
+const GREEN = "#05c46b";
+const RED = "#ff3f34";
 
 let drawMode = "Draw";
 let mousePos = { x: 0, y: 0 };
-ctx.strokeStyle = "#d2dae2";
+ctx.strokeStyle = WHITE;
 
 
 function renderGrid() {
@@ -27,25 +32,49 @@ function renderGrid() {
             ctx.strokeRect(i, j, 25, 25);
         }
     }
+
+    for (let i = 0; i < 24;i++) {
+        for (let j = 0; j < 16; j++) {
+            switch (gridManager.gridWalls[i][j]) {
+                case 1:
+                    fillCell(i,j,WHITE)
+                    break;
+                
+                case "S":
+                    console.log("Filling green");
+                    fillCell(i, j, GREEN)
+                    break;
+                    
+                case "E":
+                    console.log("Filling RED");
+
+                    fillCell(i,j, RED)
+                default:
+                    break;
+            }
+            
+        }
+    }
 }
 renderGrid();
 
 
 
 
-//Draw functionality
+//============== Grid Drawing ==============//
+
 canvas.addEventListener("mousemove", (e) => {
     //button pressed?
     if (e.buttons !== 1) return;
     draw(e);
 })
-
-canvas.addEventListener("mousedown", draw)
+canvas.addEventListener("mousedown", draw);
 
 function draw(e) {
     //get position
     mousePos.x = e.x - canvas.getBoundingClientRect().left;
     mousePos.y = e.y - canvas.getBoundingClientRect().top;
+
 
     //get cell
     let cell = {
@@ -53,15 +82,44 @@ function draw(e) {
         y: Math.floor(mousePos.y / 25)
     }
 
-    //draw or erase
-    if (drawMode == "Draw") {
-        fillCell(cell.x, cell.y, "#d2dae2");
-        gridManager.setWall(cell.x, cell.y)
+    switch (drawMode) {
+        case "Draw":
+            if (gridManager.setWall(cell.x, cell.y)) {
+                fillCell(cell.x, cell.y, WHITE);   
+            }
+            break;
+        
+        case "Erase":
+            if (gridManager.removeWall(cell.x, cell.y)) {
+                fillCell(cell.x, cell.y, BLACK);
+            } 
+            break;
+        
+        case "Start":
+            fillCell(gridManager.start[0],gridManager.start[1], BLACK)
+            fillCell(cell.x, cell.y, GREEN);
+
+            gridManager.setStart(cell.x, cell.y);
+
+            //Reset
+            handleHighlightBtn(brushBtn);
+            drawMode = "Draw";
+            break;
+        
+        case "End":
+            fillCell(gridManager.end[0],gridManager.end[1], BLACK)
+            fillCell(cell.x, cell.y, RED);
+            gridManager.setEnd(cell.x, cell.y);
+
+            //Reset
+            handleHighlightBtn(brushBtn);
+            drawMode = "Draw";
+            break;
+    
+        default:
+            break;
     }
-    else if (drawMode == "Erase") {
-        fillCell(cell.x, cell.y, "#1e272e");
-        gridManager.removeWall(cell.x, cell.y) 
-    }   
+
 }
 
 
