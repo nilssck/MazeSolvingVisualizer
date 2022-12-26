@@ -3,17 +3,18 @@ import * as gridManager from "./gridManager.js"
 const canvas = document.getElementById("mainGrid");
 /** @type {CanvasRenderingContext2D} */
 const ctx = canvas.getContext("2d");
-ctx.strokeStyle = "#d2dae2";
-
-let mousePos = { x: 0, y: 0 };
 
 
 const brushBtn = document.getElementById("brushBtn");
 const eraseBtn = document.getElementById("eraseBtn");
+const setStartBtn = document.getElementById("setStartBtn");
+const setEndBtn = document.getElementById("setEndBtn");
 const activeBrushSelector = document.getElementById("activeBrushSelector")
-let drawMode = "Draw";
-
 const debugText = document.getElementById("Debug")
+
+let drawMode = "Draw";
+let mousePos = { x: 0, y: 0 };
+ctx.strokeStyle = "#d2dae2";
 
 
 function renderGrid() {
@@ -69,14 +70,48 @@ function fillCell(x, y, color) {
     ctx.fillRect(25 * x+1, 25 * y+1, 23, 23);
 }
 
-//Brush Button
 
+//============== Brush Buttons ==============//
 brushBtn.addEventListener("click", (e) => {
     drawMode = "Draw";
-    activeBrushSelector.classList.remove("brushSwitchSelectedToggled");
+    handleHighlightBtn(brushBtn);
 })
 
 eraseBtn.addEventListener("click", (e) => {
     drawMode = "Erase";
-    activeBrushSelector.classList.add("brushSwitchSelectedToggled");
+    handleHighlightBtn(eraseBtn);
 })
+
+setStartBtn.addEventListener("click", (e) => {
+    drawMode = "Start";
+    handleHighlightBtn(setStartBtn);
+})
+
+setEndBtn.addEventListener("click", (e) => {
+    drawMode = "End";
+    handleHighlightBtn(setEndBtn);
+
+})
+
+
+
+function handleHighlightBtn(btnToHighlight) {
+    //Remove all Highlights
+    setStartBtn.classList.remove("brushBtnSelected");
+    setEndBtn.classList.remove("brushBtnSelected");
+    activeBrushSelector.classList.remove("brushSwitchSelected");
+    activeBrushSelector.classList.remove("brushSwitchSelectedToggled")
+
+    //Start/End Button
+    if (btnToHighlight == setEndBtn || btnToHighlight == setStartBtn ){
+        btnToHighlight.classList.add("brushBtnSelected");
+    }
+    else { //Switch Button
+        activeBrushSelector.classList.add("brushSwitchSelected")
+
+        if (btnToHighlight == eraseBtn) {
+            activeBrushSelector.classList.add("brushSwitchSelectedToggled")
+        }
+    }
+}
+
