@@ -3,7 +3,7 @@
     --background: #1e272e;
     --backgroundLight: #485460;
     --white: #d2dae2;
-    --greenDark: #05c46b;
+    --greenDark: #04aa5d;
     --greenLight: #0be881;
     --blueLight: #575fcf;
     --blueDark: #3c40c6;
@@ -31,7 +31,7 @@ body {
 }
 
 .inputRow{
-
+    
 }
 
 button{
@@ -54,6 +54,9 @@ button{
     background-color: var(--blueDark);
 }
 
+#runBtn{
+    background-color: var(--greenDark);
+}
 
 
 
