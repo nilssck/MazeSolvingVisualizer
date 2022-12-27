@@ -42,6 +42,7 @@ function removeWall(x, y) {
 function setStart(x, y) {
     gridWalls[start[0]][start[1]] = 0;
     start = [x, y];
+    console.log("Set start to " + start);
     gridWalls[x][y] = "S";
 }
 

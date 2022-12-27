@@ -1,4 +1,5 @@
 import * as gridManager from "./gridManager.js"
+import { breathFirstSearch } from "./algorithms/breathFirstSearch.js";
 
 const canvas = document.getElementById("mainGrid");
 /** @type {CanvasRenderingContext2D} */
@@ -9,16 +10,18 @@ const brushBtn = document.getElementById("brushBtn");
 const eraseBtn = document.getElementById("eraseBtn");
 const setStartBtn = document.getElementById("setStartBtn");
 const setEndBtn = document.getElementById("setEndBtn");
-const activeBrushSelector = document.getElementById("activeBrushSelector")
+const activeBrushSelector = document.getElementById("activeBrushSelector");
+const startBtn = document.getElementById("runBtn");
 const debugText = document.getElementById("Debug");
 
 const WHITE = "#d2dae2";
 const BLACK = "#1e272e";
 const GREEN = "#05c46b";
 const RED = "#ff3f34";
+const DARKBLUE = "#3c40c6";
+const LIGHTBLUE = "#575fcf";
 
 let drawMode = "Draw";
-let mousePos = { x: 0, y: 0 };
 ctx.strokeStyle = WHITE;
 
 
@@ -41,14 +44,18 @@ function renderGrid() {
                     break;
                 
                 case "S":
-                    console.log("Filling green");
                     fillCell(i, j, GREEN)
                     break;
                     
                 case "E":
-                    console.log("Filling RED");
+                    fillCell(i, j, RED)
+                    break;
+                case "M":
+                    fillCell(i, j, DARKBLUE);
+                    break;
+                case "F":
+                    fillCell(i, j, LIGHTBLUE);
 
-                    fillCell(i,j, RED)
                 default:
                     break;
             }
@@ -151,6 +158,12 @@ setEndBtn.addEventListener("click", (e) => {
 
 })
 
+startBtn.addEventListener("click", (e) => {
+    breathFirstSearch();
+})
+
+
+
 
 
 function handleHighlightBtn(btnToHighlight) {
@@ -173,3 +186,5 @@ function handleHighlightBtn(btnToHighlight) {
     }
 }
 
+
+export { renderGrid };
