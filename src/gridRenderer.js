@@ -22,14 +22,17 @@ const DARKBLUE = "#3c40c6";
 const LIGHTBLUE = "#575fcf";
 
 let drawMode = "Draw";
-let cellsize = 60
+let cellsize = 80;
 ctx.strokeStyle = WHITE;
 
 
 function renderGrid() {
 
+    //Correct Cellsize, so no half cells are drawn
+    while (canvas.height % cellsize != 0) {
+        cellsize--;
+    }
 
-    
     //Outline
     ctx.strokeRect(1,1,canvas.width-2,canvas.height-2);
 
@@ -68,6 +71,7 @@ function renderGrid() {
     }
 }
 renderGrid();
+
 
 function fillCell(x, y, color) {
     ctx.fillStyle = color;
