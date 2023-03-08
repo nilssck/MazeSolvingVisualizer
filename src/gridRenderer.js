@@ -22,17 +22,21 @@ const DARKBLUE = "#3c40c6";
 const LIGHTBLUE = "#575fcf";
 
 let drawMode = "Draw";
+let cellsize = 60
 ctx.strokeStyle = WHITE;
 
 
 function renderGrid() {
+
+
+    
     //Outline
     ctx.strokeRect(1,1,canvas.width-2,canvas.height-2);
 
     //Cells
-    for (let i = 0; i <= canvas.width; i += 25){
-        for (let j = 0; j <= canvas.height; j += 25){
-            ctx.strokeRect(i, j, 25, 25);
+    for (let i = 0; i <= canvas.width; i += cellsize){
+        for (let j = 0; j <= canvas.height; j += cellsize){
+            ctx.strokeRect(i, j, cellsize, cellsize);
         }
     }
 
@@ -65,6 +69,11 @@ function renderGrid() {
 }
 renderGrid();
 
+function fillCell(x, y, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(cellsize * x+1, cellsize * y+1, cellsize-2, cellsize-2);
+}
+
 
 
 
@@ -78,6 +87,7 @@ canvas.addEventListener("mousemove", (e) => {
 canvas.addEventListener("mousedown", draw);
 
 function draw(e) {
+    let mousePos = {};
     //get position
     mousePos.x = e.x - canvas.getBoundingClientRect().left;
     mousePos.y = e.y - canvas.getBoundingClientRect().top;
@@ -85,8 +95,8 @@ function draw(e) {
 
     //get cell
     let cell = {
-        x: Math.floor(mousePos.x / 25),
-        y: Math.floor(mousePos.y / 25)
+        x: Math.floor(mousePos.x / cellsize),
+        y: Math.floor(mousePos.y / cellsize)
     }
 
     switch (drawMode) {
@@ -130,10 +140,6 @@ function draw(e) {
 }
 
 
-function fillCell(x, y, color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(25 * x+1, 25 * y+1, 23, 23);
-}
 
 
 //============== Brush Buttons ==============//

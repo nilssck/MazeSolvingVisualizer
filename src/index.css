@@ -24,7 +24,7 @@ body {
 .layoutGrid{
     display: grid;
 
-    grid-template-columns: 600px 200px;
+    grid-template-columns: 800px 200px;
     align-content: center;
     justify-content: center;
 
