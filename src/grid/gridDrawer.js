@@ -1,6 +1,6 @@
 import { breathFirstSearch } from "../algorithms/breathFirstSearch.js";
 import * as gridRenderer from "./gridRenderer.js";
-import * as gridManager from "./gridManager.js"
+import * as gridManager from "./gridManager.js";
 
 const canvas = document.getElementById("mainGrid");
 
@@ -10,122 +10,133 @@ const setStartBtn = document.getElementById("setStartBtn");
 const setEndBtn = document.getElementById("setEndBtn");
 const activeBrushSelector = document.getElementById("activeBrushSelector");
 const startBtn = document.getElementById("runBtn");
+const cellSizeSlider = document.getElementById("cellSizeSlider");
+const debugText = document.getElementById("Debug");
 
-
-const POSSIBLECELLSIZES = [5, 8, 10, 16, 20, 25, 40, 50];
+const POSSIBLECELLSIZES = [10, 16, 20, 25, 40, 50, 80];
 
 let drawMode = "Draw";
-let cellsize = 25;
-
 
 //============== Grid Drawing ==============//
 
 canvas.addEventListener("mousemove", (e) => {
-    //button pressed?
-    if (e.buttons !== 1) return;
-    draw(e);
-})
+	//button pressed?
+	if (e.buttons !== 1) return;
+	draw(e);
+});
 canvas.addEventListener("mousedown", draw);
 
 function draw(e) {
-    let mousePos = {};
-    //get position
-    mousePos.x = e.x - canvas.getBoundingClientRect().left;
-    mousePos.y = e.y - canvas.getBoundingClientRect().top;
+	let mousePos = {};
+	//get position
+	mousePos.x = e.x - canvas.getBoundingClientRect().left;
+	mousePos.y = e.y - canvas.getBoundingClientRect().top;
 
+	//get cell
+	let cell = {
+		x: Math.floor(mousePos.x / gridRenderer.cellsize),
+		y: Math.floor(mousePos.y / gridRenderer.cellsize),
+	};
 
-    //get cell
-    let cell = {
-        x: Math.floor(mousePos.x / cellsize),
-        y: Math.floor(mousePos.y / cellsize)
-    }
+	switch (drawMode) {
+		case "Draw":
+			if (gridManager.setWall(cell.x, cell.y)) {
+				gridRenderer.fillCell(cell.x, cell.y, gridRenderer.WHITE);
+			}
+			break;
 
-    switch (drawMode) {
-        case "Draw":
-            if (gridManager.setWall(cell.x, cell.y)) {
-                gridRenderer.fillCell(cell.x, cell.y, gridRenderer.WHITE);   
-            }
-            break;
-        
-        case "Erase":
-            if (gridManager.removeWall(cell.x, cell.y)) {
-                gridRenderer.fillCell(cell.x, cell.y, gridRenderer.BLACK);
-            } 
-            break;
-        
-        case "Start":
-            gridRenderer.fillCell(gridManager.start[0],gridManager.start[1], gridRenderer.BLACK)
-            gridRenderer.fillCell(cell.x, cell.y, gridRenderer.GREEN);
+		case "Erase":
+			if (gridManager.removeWall(cell.x, cell.y)) {
+				gridRenderer.fillCell(cell.x, cell.y, gridRenderer.BLACK);
+			}
+			break;
 
-            gridManager.setStart(cell.x, cell.y);
+		case "Start":
+			gridRenderer.fillCell(
+				gridManager.start[0],
+				gridManager.start[1],
+				gridRenderer.BLACK
+			);
+			gridRenderer.fillCell(cell.x, cell.y, gridRenderer.GREEN);
 
-            //Reset
-            handleHighlightBtn(brushBtn);
-            drawMode = "Draw";
-            break;
-        
-        case "End":
-            gridRenderer.fillCell(gridManager.end[0],gridManager.end[1], gridRenderer.BLACK)
-            gridRenderer.fillCell(cell.x, cell.y, gridRenderer.RED);
-            gridManager.setEnd(cell.x, cell.y);
+			gridManager.setStart(cell.x, cell.y);
 
-            //Reset
-            handleHighlightBtn(brushBtn);
-            drawMode = "Draw";
-            break;
-    
-        default:
-            break;
-    }
+			//Reset
+			handleHighlightBtn(brushBtn);
+			drawMode = "Draw";
+			break;
 
+		case "End":
+			gridRenderer.fillCell(
+				gridManager.end[0],
+				gridManager.end[1],
+				gridRenderer.BLACK
+			);
+			gridRenderer.fillCell(cell.x, cell.y, gridRenderer.RED);
+			gridManager.setEnd(cell.x, cell.y);
+
+			//Reset
+			handleHighlightBtn(brushBtn);
+			drawMode = "Draw";
+			break;
+
+		default:
+			break;
+	}
 }
-
-
-
 
 //============== Brush Buttons ==============//
 brushBtn.addEventListener("click", (e) => {
-    drawMode = "Draw";
-    handleHighlightBtn(brushBtn);
-})
+	drawMode = "Draw";
+	handleHighlightBtn(brushBtn);
+});
 
 eraseBtn.addEventListener("click", (e) => {
-    drawMode = "Erase";
-    handleHighlightBtn(eraseBtn);
-})
+	drawMode = "Erase";
+	handleHighlightBtn(eraseBtn);
+});
 
 setStartBtn.addEventListener("click", (e) => {
-    drawMode = "Start";
-    handleHighlightBtn(setStartBtn);
-})
+	drawMode = "Start";
+	handleHighlightBtn(setStartBtn);
+});
 
 setEndBtn.addEventListener("click", (e) => {
-    drawMode = "End";
-    handleHighlightBtn(setEndBtn);
-
-})
+	drawMode = "End";
+	handleHighlightBtn(setEndBtn);
+});
 
 startBtn.addEventListener("click", (e) => {
-    breathFirstSearch();
-})
-
+	breathFirstSearch();
+});
 
 function handleHighlightBtn(btnToHighlight) {
-    //Remove all Highlights
-    setStartBtn.classList.remove("brushBtnSelected");
-    setEndBtn.classList.remove("brushBtnSelected");
-    activeBrushSelector.classList.remove("brushSwitchSelected");
-    activeBrushSelector.classList.remove("brushSwitchSelectedToggled")
+	//Remove all Highlights
+	setStartBtn.classList.remove("brushBtnSelected");
+	setEndBtn.classList.remove("brushBtnSelected");
+	activeBrushSelector.classList.remove("brushSwitchSelected");
+	activeBrushSelector.classList.remove("brushSwitchSelectedToggled");
 
-    //Start/End Button
-    if (btnToHighlight == setEndBtn || btnToHighlight == setStartBtn ){
-        btnToHighlight.classList.add("brushBtnSelected");
-    }
-    else { //Switch Button
-        activeBrushSelector.classList.add("brushSwitchSelected")
+	//Start/End Button
+	if (btnToHighlight == setEndBtn || btnToHighlight == setStartBtn) {
+		btnToHighlight.classList.add("brushBtnSelected");
+	} else {
+		//Switch Button
+		activeBrushSelector.classList.add("brushSwitchSelected");
 
-        if (btnToHighlight == eraseBtn) {
-            activeBrushSelector.classList.add("brushSwitchSelectedToggled")
-        }
-    }
+		if (btnToHighlight == eraseBtn) {
+			activeBrushSelector.classList.add("brushSwitchSelectedToggled");
+		}
+	}
 }
+
+//============== Cell Size ==============//
+
+cellSizeSlider.addEventListener("input", function () {
+	debugText.innerHTML = this.value;
+	const size = POSSIBLECELLSIZES[this.value];
+	gridManager.initArray(800 / size, 400 / size);
+
+	gridRenderer.setCellSize(size);
+	gridRenderer.renderGrid();
+});
