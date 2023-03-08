@@ -1,10 +1,8 @@
+import { breathFirstSearch } from "../algorithms/breathFirstSearch.js";
+import * as gridRenderer from "./gridRenderer.js";
 import * as gridManager from "./gridManager.js"
-import { breathFirstSearch } from "./algorithms/breathFirstSearch.js";
 
 const canvas = document.getElementById("mainGrid");
-/** @type {CanvasRenderingContext2D} */
-const ctx = canvas.getContext("2d");
-
 
 const brushBtn = document.getElementById("brushBtn");
 const eraseBtn = document.getElementById("eraseBtn");
@@ -12,73 +10,12 @@ const setStartBtn = document.getElementById("setStartBtn");
 const setEndBtn = document.getElementById("setEndBtn");
 const activeBrushSelector = document.getElementById("activeBrushSelector");
 const startBtn = document.getElementById("runBtn");
-const debugText = document.getElementById("Debug");
 
-const WHITE = "#d2dae2";
-const BLACK = "#1e272e";
-const GREEN = "#05c46b";
-const RED = "#ff3f34";
-const DARKBLUE = "#3c40c6";
-const LIGHTBLUE = "#575fcf";
+
+const POSSIBLECELLSIZES = [5, 8, 10, 16, 20, 25, 40, 50];
 
 let drawMode = "Draw";
-let cellsize = 80;
-ctx.strokeStyle = WHITE;
-
-
-function renderGrid() {
-
-    //Correct Cellsize, so no half cells are drawn
-    while (canvas.height % cellsize != 0) {
-        cellsize--;
-    }
-
-    //Outline
-    ctx.strokeRect(1,1,canvas.width-2,canvas.height-2);
-
-    //Cells
-    for (let i = 0; i <= canvas.width; i += cellsize){
-        for (let j = 0; j <= canvas.height; j += cellsize){
-            ctx.strokeRect(i, j, cellsize, cellsize);
-        }
-    }
-
-    for (let i = 0; i < 24;i++) {
-        for (let j = 0; j < 16; j++) {
-            switch (gridManager.gridWalls[i][j]) {
-                case 1:
-                    fillCell(i,j,WHITE)
-                    break;
-                
-                case "S":
-                    fillCell(i, j, GREEN)
-                    break;
-                    
-                case "E":
-                    fillCell(i, j, RED)
-                    break;
-                case "M":
-                    fillCell(i, j, DARKBLUE);
-                    break;
-                case "F":
-                    fillCell(i, j, LIGHTBLUE);
-
-                default:
-                    break;
-            }
-            
-        }
-    }
-}
-renderGrid();
-
-
-function fillCell(x, y, color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(cellsize * x+1, cellsize * y+1, cellsize-2, cellsize-2);
-}
-
-
+let cellsize = 25;
 
 
 //============== Grid Drawing ==============//
@@ -106,19 +43,19 @@ function draw(e) {
     switch (drawMode) {
         case "Draw":
             if (gridManager.setWall(cell.x, cell.y)) {
-                fillCell(cell.x, cell.y, WHITE);   
+                gridRenderer.fillCell(cell.x, cell.y, gridRenderer.WHITE);   
             }
             break;
         
         case "Erase":
             if (gridManager.removeWall(cell.x, cell.y)) {
-                fillCell(cell.x, cell.y, BLACK);
+                gridRenderer.fillCell(cell.x, cell.y, gridRenderer.BLACK);
             } 
             break;
         
         case "Start":
-            fillCell(gridManager.start[0],gridManager.start[1], BLACK)
-            fillCell(cell.x, cell.y, GREEN);
+            gridRenderer.fillCell(gridManager.start[0],gridManager.start[1], gridRenderer.BLACK)
+            gridRenderer.fillCell(cell.x, cell.y, gridRenderer.GREEN);
 
             gridManager.setStart(cell.x, cell.y);
 
@@ -128,8 +65,8 @@ function draw(e) {
             break;
         
         case "End":
-            fillCell(gridManager.end[0],gridManager.end[1], BLACK)
-            fillCell(cell.x, cell.y, RED);
+            gridRenderer.fillCell(gridManager.end[0],gridManager.end[1], gridRenderer.BLACK)
+            gridRenderer.fillCell(cell.x, cell.y, gridRenderer.RED);
             gridManager.setEnd(cell.x, cell.y);
 
             //Reset
@@ -173,9 +110,6 @@ startBtn.addEventListener("click", (e) => {
 })
 
 
-
-
-
 function handleHighlightBtn(btnToHighlight) {
     //Remove all Highlights
     setStartBtn.classList.remove("brushBtnSelected");
@@ -195,6 +129,3 @@ function handleHighlightBtn(btnToHighlight) {
         }
     }
 }
-
-
-export { renderGrid };

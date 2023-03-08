@@ -1,5 +1,5 @@
-import { gridWalls, start, end } from "../gridManager.js";
-import { renderGrid } from "../gridRenderer.js";
+import { gridWalls, start, end } from "../grid/gridManager.js";
+import { renderGrid } from "../grid/gridRenderer.js";
 
 var queue = [];
 
