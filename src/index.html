@@ -17,7 +17,7 @@
 
 
     <div class="inputRow">
-      <div class="cellSizeSlider">
+      <div class="sliderBlock">
         Cellsize
         <input type="range" min="0" max="16" value="9" class="slider" id="cellSizeSlider">
       </div>
@@ -39,17 +39,40 @@
       <button id="setEndBtn">
         Set end
       </button>
-      <button id="runBtn">
-        Solve!
+
+      <button id="generateMazeBtn">
+        Generate
       </button>
 
 
+    </div>
+
+
+    <div class="controlRow">
+      <div class="algorithmSelector">
+        Algorithm:
+        <select name="Algorithm" id="AlgorithmSelector">
+          <option value="BFS">Breath First Search</option>
+          <option value="DFS">Depth First Searcn</option>
+          <option value="A*">A* </option>
+        </select>
+      </div>
+
+      <div class="sliderBlock">
+        <span>Speed</span>
+
+        <input type="range" min="0" max="100" value="50" class="slider" id="cellSizeSlider">
+      </div>
+
+      <button id="runBtn" class="pictureButton">
+        P
+      </button>
+
+      <button id="runBtn" class="pictureButton">
+        S
+      </button>
 
     </div>
-    <button id="generateMazeBtn">
-      Generate Maze
-    </button>
-
 
 
   </div>
