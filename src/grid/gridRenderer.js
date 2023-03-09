@@ -23,14 +23,14 @@ function renderGrid() {
 	ctx.strokeRect(1, 1, canvas.width - 2, canvas.height - 2);
 
 	//Cells
-	for (let i = 0; i <= canvas.width; i += cellsize) {
-		for (let j = 0; j <= canvas.height; j += cellsize) {
-			ctx.strokeRect(i, j, cellsize, cellsize);
-		}
-	}
+	// for (let i = 0; i <= canvas.width; i += cellsize) {
+	// 	for (let j = 0; j <= canvas.height; j += cellsize) {
+	// 		ctx.strokeRect(i, j, cellsize, cellsize);
+	// 	}
+	// }
 
-	for (let i = 0; i < 800 / cellsize; i++) {
-		for (let j = 0; j < 400 / cellsize; j++) {
+	for (let i = 0; i < 720 / cellsize; i++) {
+		for (let j = 0; j < 360 / cellsize; j++) {
 			switch (gridManager.gridWalls[i][j]) {
 				case 1:
 					fillCell(i, j, WHITE);

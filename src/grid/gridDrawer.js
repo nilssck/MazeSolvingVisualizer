@@ -13,7 +13,9 @@ const startBtn = document.getElementById("runBtn");
 const cellSizeSlider = document.getElementById("cellSizeSlider");
 const debugText = document.getElementById("Debug");
 
-const POSSIBLECELLSIZES = [10, 16, 20, 25, 40, 50, 80];
+const POSSIBLECELLSIZES = [
+	5, 6, 8, 9, 10, 12, 15, 18, 20, 24, 30, 36, 40, 45, 60, 72, 90,
+];
 
 let drawMode = "Draw";
 
@@ -135,7 +137,7 @@ function handleHighlightBtn(btnToHighlight) {
 cellSizeSlider.addEventListener("input", function () {
 	debugText.innerHTML = this.value;
 	const size = POSSIBLECELLSIZES[this.value];
-	gridManager.initArray(800 / size, 400 / size);
+	gridManager.initArray(720 / size, 360 / size);
 
 	gridRenderer.setCellSize(size);
 	gridRenderer.renderGrid();
