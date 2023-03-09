@@ -16,14 +16,18 @@ function getNeighbours(x, y) {
 	let neighbours = [];
 	console.log(grid.X / 2);
 
+	//North
 	if (x + 1 < grid.X / 2 - 1 && !isVisited(x + 1, y))
 		neighbours.push([x + 1, y]);
 
+	//South
 	if (x - 1 >= 0 && !isVisited(x - 1, y)) neighbours.push([x - 1, y]);
 
+	//East
 	if (y + 1 < grid.Y / 2 - 1 && !isVisited(x, y + 1))
 		neighbours.push([x, y + 1]);
 
+	//West
 	if (y - 1 >= 0 && !isVisited(x, y - 1)) neighbours.push([x, y - 1]);
 
 	return neighbours;
@@ -35,6 +39,11 @@ let stack = [];
 function generateMaze() {
 	visited = [];
 	stack = [];
+
+	//Fill with Walls
+
+	grid.setStart(1, 1);
+	grid.setEnd(grid.X - 3, grid.Y - 3);
 	grid.fillArray(1);
 	generate([0, 0]);
 }
@@ -66,14 +75,18 @@ async function generate(currentCell) {
 			//Remove the wall between the current cell and the chosen cell
 			if (currentCell[1] == chosenCell[1]) {
 				if (currentCell[0] < chosenCell[0]) {
+					//North
 					grid.removeWall(2 * (currentCell[0] + 1), 2 * currentCell[1] + 1);
 				} else {
+					//South
 					grid.removeWall(2 * currentCell[0], 2 * currentCell[1] + 1);
 				}
 			} else {
 				if (currentCell[1] < chosenCell[1]) {
+					//East
 					grid.removeWall(2 * currentCell[0] + 1, 2 * (currentCell[1] + 1));
 				} else {
+					//West
 					grid.removeWall(2 * currentCell[0] + 1, 2 * currentCell[1]);
 				}
 			}
