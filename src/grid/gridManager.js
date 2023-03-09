@@ -1,24 +1,30 @@
 //Init Array
 var gridWalls;
+var X;
+var Y;
 var start;
 var end;
 
 function initArray(x, y) {
+	X = x;
+	Y = y;
 	gridWalls = new Array(x);
 	for (var i = 0; i < gridWalls.length; i++) gridWalls[i] = new Array(y);
 
-	//Set zeros
-	for (let i = 0; i < x; i++) {
-		for (let j = 0; j < y; j++) {
-			gridWalls[i][j] = 0;
-		}
-	}
+	fillArray(0);
 
 	start = [0, 0];
 	gridWalls[0][0] = "S";
 	end = [x - 1, y - 1];
 	gridWalls[x - 1][y - 1] = "E";
-	console.log(gridWalls);
+}
+
+function fillArray(value) {
+	for (let i = 0; i < X; i++) {
+		for (let j = 0; j < Y; j++) {
+			gridWalls[i][j] = value;
+		}
+	}
 }
 
 function setWall(x, y) {
@@ -59,7 +65,10 @@ export {
 	setStart,
 	setEnd,
 	initArray,
+	fillArray,
 	start,
 	end,
 	gridWalls,
+	X,
+	Y,
 };
