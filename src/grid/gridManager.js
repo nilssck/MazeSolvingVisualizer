@@ -1,3 +1,4 @@
+import { renderGrid } from "./gridRenderer.js";
 //Init Array
 var gridWalls;
 var X;
@@ -6,17 +7,21 @@ var start;
 var end;
 
 function initArray(x, y) {
+	//Set size
 	X = x;
 	Y = y;
+
+	//Generate and fill array
 	gridWalls = new Array(x);
 	for (var i = 0; i < gridWalls.length; i++) gridWalls[i] = new Array(y);
 
-	fillArray(0);
-
+	//Set start/end
 	start = [0, 0];
 	gridWalls[0][0] = "S";
 	end = [x - 1, y - 1];
 	gridWalls[x - 1][y - 1] = "E";
+
+	fillArray(0);
 }
 
 function fillArray(value) {
@@ -25,6 +30,22 @@ function fillArray(value) {
 			gridWalls[i][j] = value;
 		}
 	}
+
+	gridWalls[start[0]][start[1]] = "S";
+	gridWalls[end[0]][end[1]] = "E";
+}
+
+function resetRunningValues() {
+	for (let i = 0; i < X; i++) {
+		for (let j = 0; j < Y; j++) {
+			if (gridWalls[i][j] !== 1) {
+				gridWalls[i][j] = 0;
+			}
+		}
+	}
+	gridWalls[start[0]][start[1]] = "S";
+	gridWalls[end[0]][end[1]] = "E";
+	renderGrid();
 }
 
 function setWall(x, y) {
@@ -66,6 +87,7 @@ export {
 	setEnd,
 	initArray,
 	fillArray,
+	resetRunningValues,
 	start,
 	end,
 	gridWalls,
