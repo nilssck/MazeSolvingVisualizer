@@ -1,4 +1,3 @@
-import { breathFirstSearch } from "../algorithms/breathFirstSearch.js";
 import * as gridRenderer from "./gridRenderer.js";
 import * as gridManager from "./gridManager.js";
 
@@ -9,7 +8,6 @@ const eraseBtn = document.getElementById("eraseBtn");
 const setStartBtn = document.getElementById("setStartBtn");
 const setEndBtn = document.getElementById("setEndBtn");
 const activeBrushSelector = document.getElementById("activeBrushSelector");
-const startBtn = document.getElementById("runBtn");
 const cellSizeSlider = document.getElementById("cellSizeSlider");
 const debugText = document.getElementById("Debug");
 
@@ -106,10 +104,6 @@ setStartBtn.addEventListener("click", (e) => {
 setEndBtn.addEventListener("click", (e) => {
 	drawMode = "End";
 	handleHighlightBtn(setEndBtn);
-});
-
-startBtn.addEventListener("click", (e) => {
-	breathFirstSearch();
 });
 
 function handleHighlightBtn(btnToHighlight) {

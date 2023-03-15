@@ -1,5 +1,4 @@
 import * as gridManager from "./gridManager.js";
-import { breathFirstSearch } from "../algorithms/breathFirstSearch.js";
 
 const canvas = document.getElementById("mainGrid");
 /** @type {CanvasRenderingContext2D} */
@@ -46,11 +45,15 @@ function renderGrid() {
 				case "E":
 					fillCell(i, j, RED);
 					break;
-				case "M":
+				case "Current":
 					fillCell(i, j, DARKBLUE);
 					break;
-				case "F":
+				case "Checked":
+					fillCell(i, j, GREY);
+					break;
+				case "Queued":
 					fillCell(i, j, LIGHTBLUE);
+					break;
 
 				default:
 					break;

@@ -1,5 +1,6 @@
 import * as grid from "../grid/gridManager.js";
 import { renderGrid } from "../grid/gridRenderer.js";
+import { setStatus } from "../runControl.js";
 
 function isVisited(x, y) {
 	let result = false;
@@ -99,6 +100,8 @@ async function generate(currentCell) {
 			await new Promise((r) => setTimeout(r, 1));
 		}
 	}
+
+	setStatus("IDLE");
 }
 
 export { generateMaze };
