@@ -85,6 +85,10 @@ body {
 
 }
 
+#stopBtn{
+    background-color: var(--backgroundLight);
+}
+
 button{
     display: block;
     width: 120px;
@@ -110,6 +114,12 @@ button:hover{
     margin: 10px;
     width: 65px;
     height: 65px;
+    padding: 0px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }
 
 .slider {
