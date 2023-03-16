@@ -1,4 +1,4 @@
-import { gridWalls, start, end, X, Y } from "../grid/gridManager.js";
+import { gridWalls, start, end } from "../grid/gridManager.js";
 import { renderGrid } from "../grid/gridRenderer.js";
 import { checkInBounds } from "./helperFunctions.js";
 import { setStatus } from "../runControl.js";
@@ -28,22 +28,22 @@ const doStep = function () {
 	console.log(gridWalls);
 
 	//Check if End is found
-	if (gridWalls[x][y] === "E") {
-		console.log("Found End at" + currCell);
+	if (x == end[0] && y == end[1]) {
+		console.warn("Found End at " + currCell);
 		setStatus("ENDFOUND");
+		return;
 	}
 
 	//North
 	if (checkInBounds(x, y + 1)) {
-		if (gridWalls[x][y + 1] === 0) {
+		if (gridWalls[x][y + 1] === 0 || gridWalls[x][y + 1] === "E") {
 			queue.push([x, y + 1]);
 			gridWalls[x][y + 1] = "Queued";
 		}
 	}
-
 	//East
 	if (checkInBounds(x + 1, y)) {
-		if (gridWalls[x + 1][y] === 0) {
+		if (gridWalls[x + 1][y] === 0 || gridWalls[x + 1][y] === "E") {
 			queue.push([x + 1, y]);
 			gridWalls[x + 1][y] = "Queued";
 		}
@@ -51,7 +51,7 @@ const doStep = function () {
 
 	//South
 	if (checkInBounds(x, y - 1)) {
-		if (gridWalls[x][y - 1] === 0) {
+		if (gridWalls[x][y - 1] === 0 || gridWalls[x][y - 1] === "E") {
 			queue.push([x, y - 1]);
 			gridWalls[x][y - 1] = "Queued";
 		}
@@ -59,7 +59,7 @@ const doStep = function () {
 
 	//West
 	if (checkInBounds(x - 1, y)) {
-		if (gridWalls[x - 1][y] === 0) {
+		if (gridWalls[x - 1][y] === 0 || gridWalls[x - 1][y] === "E") {
 			queue.push([x - 1, y]);
 			gridWalls[x - 1][y] = "Queued";
 		}
