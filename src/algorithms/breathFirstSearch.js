@@ -6,15 +6,15 @@ import { setStatus } from "../runControl.js";
 var queue = [];
 var lastCell = [];
 
-function init() {
+const init = function () {
 	//Push start into queue
 	queue.push([start[0], start[1]]);
 	lastCell[0] = start[0];
 	lastCell[1] = start[1];
 	renderGrid();
-}
+};
 
-function doStep() {
+const doStep = function () {
 	//set color of last cell;
 	gridWalls[lastCell[0]][lastCell[1]] = "Checked";
 
@@ -70,11 +70,11 @@ function doStep() {
 	//Update last cell
 	lastCell[0] = x;
 	lastCell[1] = y;
-}
+};
 
-function reset() {
+const reset = function reset() {
 	queue = [];
 	lastCell = [];
-}
+};
 
 export { init, doStep, reset };

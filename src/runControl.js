@@ -8,6 +8,7 @@ const generateMazeBtn = document.getElementById("generateMazeBtn");
 const startBtn = document.getElementById("runBtn");
 const stopBtn = document.getElementById("stopBtn");
 const speedSlider = document.getElementById("speedSlider");
+const algorithmSelector = document.getElementById("AlgorithmSelector");
 
 export let status = "IDLE";
 export function setStatus(x) {
@@ -15,8 +16,14 @@ export function setStatus(x) {
 }
 let speed = 100;
 
+//Initialize grid
 initArray(720 / 24, 360 / 24);
 renderGrid();
+
+//Default algorithm functions
+let algInit = bfs.init;
+let algDoStep = bfs.doStep;
+let algReset = bfs.reset;
 
 //Updates the picture Buttons to Play/Step
 function setButtonsPlay() {
@@ -41,10 +48,12 @@ generateMazeBtn.addEventListener("click", (e) => {
 startBtn.addEventListener("click", (e) => {
 	//Start
 	if (status == "IDLE") {
+		//Update Status and UI
 		status = "RUNNING";
 		setButtonsPause();
+		algorithmSelector.disabled = true;
 
-		bfs.init();
+		algInit();
 		run();
 	}
 
@@ -65,26 +74,50 @@ startBtn.addEventListener("click", (e) => {
 stopBtn.addEventListener("click", (e) => {
 	//Stop running
 	if (status == "RUNNING") {
+		//Update Status and UI
 		status = "IDLE";
 		setButtonsPlay();
+		algorithmSelector.disabled = false;
+
+		//Reset Data
 		resetRunningValues();
-		bfs.reset();
+		algReset();
 	}
 
 	//Execute step
 	else if (status == "PAUSED") {
-		bfs.doStep();
+		algDoStep();
+	}
+});
+
+//Update Speed
+speedSlider.addEventListener("input", function () {
+	speed = 2 ** this.value;
+});
+
+//Update Selected algorithm
+algorithmSelector.addEventListener("change", (e) => {
+	switch (e.target.value) {
+		case "BFS":
+			algDoStep = bfs.doStep;
+			algInit = bfs.init;
+			algReset = bfs.reset;
+			break;
+		case "DFS":
+			//TODO
+			break;
+		case "A*":
+			//TODO
+			break;
+		default:
+			break;
 	}
 });
 
 async function run() {
 	if (status == "RUNNING") {
-		bfs.doStep();
+		algDoStep();
 		await new Promise((r) => setTimeout(r, speed));
 		run();
 	}
 }
-
-speedSlider.addEventListener("input", function () {
-	speed = 2 ** this.value;
-});
