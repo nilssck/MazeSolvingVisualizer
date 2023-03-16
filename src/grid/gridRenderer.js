@@ -54,6 +54,9 @@ function renderGrid() {
 				case "Queued":
 					fillCell(i, j, LIGHTBLUE);
 					break;
+				case "Route":
+					fillCell(i, j, RED);
+					break;
 
 				default:
 					break;

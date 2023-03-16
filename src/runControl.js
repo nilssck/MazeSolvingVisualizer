@@ -4,6 +4,7 @@ import { resetRunningValues } from "./grid/gridManager.js";
 import { generateMaze } from "./algorithms/randomizedDFGenerator.js";
 import * as bfs from "./algorithms/breathFirstSearch.js";
 import * as dfs from "./algorithms/depthFirstSearch.js";
+import { calcRouteStep } from "./algorithms/routegenerator.js";
 
 const generateMazeBtn = document.getElementById("generateMazeBtn");
 const startBtn = document.getElementById("runBtn");
@@ -118,9 +119,14 @@ algorithmSelector.addEventListener("change", (e) => {
 });
 
 async function run() {
+	await new Promise((r) => setTimeout(r, speed));
 	if (status == "RUNNING") {
 		algDoStep();
-		await new Promise((r) => setTimeout(r, speed));
 		run();
+	} else if (status == "DRAWINGROUTE") {
+		calcRouteStep();
+		run();
+	} else if (status == "FINISHED") {
+		//TODO Set button to reset
 	}
 }
