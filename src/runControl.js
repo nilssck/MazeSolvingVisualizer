@@ -3,6 +3,7 @@ import { initArray } from "./grid/gridManager.js";
 import { resetRunningValues } from "./grid/gridManager.js";
 import { generateMaze } from "./algorithms/randomizedDFGenerator.js";
 import * as bfs from "./algorithms/breathFirstSearch.js";
+import * as dfs from "./algorithms/depthFirstSearch.js";
 
 const generateMazeBtn = document.getElementById("generateMazeBtn");
 const startBtn = document.getElementById("runBtn");
@@ -104,7 +105,9 @@ algorithmSelector.addEventListener("change", (e) => {
 			algReset = bfs.reset;
 			break;
 		case "DFS":
-			//TODO
+			algDoStep = dfs.doStep;
+			algInit = dfs.init;
+			algReset = dfs.reset;
 			break;
 		case "A*":
 			//TODO
