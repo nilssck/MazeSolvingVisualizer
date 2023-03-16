@@ -13,6 +13,7 @@ export let status = "IDLE";
 export function setStatus(x) {
 	status = x;
 }
+let speed = 100;
 
 initArray(720 / 24, 360 / 24);
 renderGrid();
@@ -72,7 +73,6 @@ stopBtn.addEventListener("click", (e) => {
 
 	//Execute step
 	else if (status == "PAUSED") {
-		console.log("penis");
 		bfs.doStep();
 	}
 });
@@ -80,7 +80,11 @@ stopBtn.addEventListener("click", (e) => {
 async function run() {
 	if (status == "RUNNING") {
 		bfs.doStep();
-		await new Promise((r) => setTimeout(r, 100));
+		await new Promise((r) => setTimeout(r, speed));
 		run();
 	}
 }
+
+speedSlider.addEventListener("input", function () {
+	speed = 2 ** this.value;
+});
