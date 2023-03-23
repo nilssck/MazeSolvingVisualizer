@@ -40,6 +40,14 @@ function setButtonsPause() {
 	stopBtn.innerHTML = '<img src="icons/icons8-stop-48.png" alt="start"></img>';
 }
 
+function resetAllValues() {
+	status = "IDLE";
+	setButtonsPlay();
+	algorithmSelector.disabled = false;
+	resetRunningValues();
+	algReset();
+}
+
 generateMazeBtn.addEventListener("click", (e) => {
 	if (status == "IDLE") {
 		status == "GENERATING";
@@ -67,21 +75,45 @@ startBtn.addEventListener("click", (e) => {
 			status = "RUNNING";
 			setButtonsPause();
 			run();
+			break;
+
+		case "DRAWINGROUTE":
+			status = "DRAWINGROUTEPAUSED";
+			setButtonsPlay();
+			break;
+
+		case "DRAWINGROUTEPAUSED":
+			status = "DRAWINGROUTE";
+			setButtonsPause();
+			run();
+			break;
+
+		case "FINISHED":
+			resetAllValues();
+			break;
+
 		default:
 			break;
 	}
 });
 
 stopBtn.addEventListener("click", (e) => {
-	switch ("status") {
+	switch (status) {
 		case "RUNNING":
-			status = "IDLE";
-			setButtonsPlay();
-			algorithmSelector.disabled = false;
+			resetRunningValues();
 			break;
 
 		case "PAUSED":
 			algDoStep();
+			break;
+
+		case "DRAWINGROUTEPAUSED":
+			calcRouteStep();
+			break;
+
+		case "FINISHED":
+			resetAllValues();
+			break;
 
 		default:
 			break;
@@ -127,8 +159,8 @@ async function run() {
 			run();
 			break;
 		case "FINISHED":
-			//TODO Set button to reset
-
+			startBtn.innerHTML =
+				'<img src="icons/icons8-reset-50.png" alt="start"></img>';
 			break;
 		default:
 			break;
