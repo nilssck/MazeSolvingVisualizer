@@ -25,7 +25,6 @@ function firstRouteStep(a, b) {
 }
 
 const calcRouteStep = function () {
-	console.log("cell", x, y, "distance", distanceArr[x][y]);
 	renderGrid();
 
 	//Start found
@@ -36,8 +35,6 @@ const calcRouteStep = function () {
 
 	//North
 	if (checkInBounds(x, y + 1)) {
-		console.log("cell north", x, y + 1, "distance", distanceArr[x][y + 1]);
-
 		if (distanceArr[x][y + 1] == distanceArr[x][y] - 1) {
 			calculatedRoute.push([x, y + 1]);
 			gridWalls[x][y + 1] = "Route";
@@ -49,8 +46,6 @@ const calcRouteStep = function () {
 
 	//East
 	if (checkInBounds(x + 1, y)) {
-		console.log("cell east", x + 1, y, "distance", distanceArr[x + 1][y]);
-
 		if (distanceArr[x + 1][y] == distanceArr[x][y] - 1) {
 			calculatedRoute.push([x, y + 1]);
 			gridWalls[x + 1][y] = "Route";
@@ -62,8 +57,6 @@ const calcRouteStep = function () {
 
 	//South
 	if (checkInBounds(x, y - 1)) {
-		console.log("cell south", x, y - 1, "distance", distanceArr[x][y - 1]);
-
 		if (distanceArr[x][y - 1] == distanceArr[x][y] - 1) {
 			calculatedRoute.push([x, y - 1]);
 			gridWalls[x][y - 1] = "Route";
@@ -75,8 +68,6 @@ const calcRouteStep = function () {
 
 	//West
 	if (checkInBounds(x - 1, y)) {
-		console.log("cell west", x - 1, y, "distance", distanceArr[x - 1][y]);
-
 		if (distanceArr[x - 1][y] == distanceArr[x][y] - 1) {
 			calculatedRoute.push([x, y + 1]);
 			gridWalls[x - 1][y] = "Route";

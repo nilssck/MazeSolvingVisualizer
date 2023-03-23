@@ -48,47 +48,43 @@ generateMazeBtn.addEventListener("click", (e) => {
 });
 
 startBtn.addEventListener("click", (e) => {
-	//Start
-	if (status == "IDLE") {
-		//Update Status and UI
-		status = "RUNNING";
-		setButtonsPause();
-		algorithmSelector.disabled = true;
+	switch (status) {
+		case "IDLE":
+			status = "RUNNING";
+			setButtonsPause();
+			algorithmSelector.disabled = true;
 
-		algInit();
-		run();
-	}
+			algInit();
+			run();
+			break;
 
-	//Pause
-	else if (status == "RUNNING") {
-		status = "PAUSED";
-		setButtonsPlay();
-	}
+		case "RUNNING":
+			status = "PAUSED";
+			setButtonsPlay();
+			break;
 
-	//Resume
-	else if ((status = "PAUSED")) {
-		status = "RUNNING";
-		setButtonsPause();
-		run();
+		case "PAUSED":
+			status = "RUNNING";
+			setButtonsPause();
+			run();
+		default:
+			break;
 	}
 });
 
 stopBtn.addEventListener("click", (e) => {
-	//Stop running
-	if (status == "RUNNING") {
-		//Update Status and UI
-		status = "IDLE";
-		setButtonsPlay();
-		algorithmSelector.disabled = false;
+	switch ("status") {
+		case "RUNNING":
+			status = "IDLE";
+			setButtonsPlay();
+			algorithmSelector.disabled = false;
+			break;
 
-		//Reset Data
-		resetRunningValues();
-		algReset();
-	}
+		case "PAUSED":
+			algDoStep();
 
-	//Execute step
-	else if (status == "PAUSED") {
-		algDoStep();
+		default:
+			break;
 	}
 });
 
@@ -120,13 +116,21 @@ algorithmSelector.addEventListener("change", (e) => {
 
 async function run() {
 	await new Promise((r) => setTimeout(r, speed));
-	if (status == "RUNNING") {
-		algDoStep();
-		run();
-	} else if (status == "DRAWINGROUTE") {
-		calcRouteStep();
-		run();
-	} else if (status == "FINISHED") {
-		//TODO Set button to reset
+
+	switch (status) {
+		case "RUNNING":
+			algDoStep();
+			run();
+			break;
+		case "DRAWINGROUTE":
+			calcRouteStep();
+			run();
+			break;
+		case "FINISHED":
+			//TODO Set button to reset
+
+			break;
+		default:
+			break;
 	}
 }
