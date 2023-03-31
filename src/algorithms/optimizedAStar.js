@@ -1,15 +1,14 @@
 import { gridWalls, start, end, X, Y } from "../grid/gridManager.js";
 import { renderGrid } from "../grid/gridRenderer.js";
-import { checkInBounds, generateArray } from "./helperFunctions.js";
+import { checkInBounds, getFCost } from "./helperFunctions.js";
 import { setStatus } from "../runControl.js";
 import * as routeGen from "./routegenerator.js";
 import { MinHeap } from "./datastructures/MinHeap.js";
 
 class Node {
-	constructor(x, y, fCost, gCost) {
+	constructor(x, y) {
 		this.gCost = 10000000; //distance from start
 		this.hCost = 10000000; //manhattan distance from end
-		//this.eCost = 10000000; //eucledian distance from end
 		this.fCost = this.gCost + this.hCost; // sum
 		this.x = x;
 		this.y = y;
@@ -32,7 +31,6 @@ function init() {
 			nodeArray[i][j].hCost =
 				getManhattanDistance([i, j], end) +
 				getEucledianDistance([i, j], end) / (X + Y);
-			//nodeArray[i][j].eCost = getEucledianDistance([i, j], end);
 		}
 	}
 
@@ -54,12 +52,12 @@ function doStep() {
 	gridWalls[lastCell[0]][lastCell[1]] = "Checked";
 	gridWalls[x][y] = "Current";
 
-	//TODO
-	console.log([currentNode.x, currentNode.y]);
-	console.log(end);
 	if (currentNode.x == end[0] && currentNode.y == end[1]) {
-		console.log("WEEEEE");
 		console.warn("End Found at ", currentNode);
+		routeGen.setDistanceArr(getFCost(nodeArray));
+		setStatus("DRAWINGROUTE");
+		routeGen.firstRouteStep(x, y);
+		return;
 	}
 
 	//North
@@ -91,10 +89,6 @@ function doStep() {
 
 	lastCell[0] = x;
 	lastCell[1] = y;
-
-	console.log("Open List: ", openList);
-	console.log(openList.testHeap());
-	logfCost();
 
 	renderGrid();
 }
@@ -141,17 +135,6 @@ function getEucledianDistance(a, b) {
 
 function getManhattanDistance(a, b) {
 	return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
-}
-
-function logfCost() {
-	var arr = new Array(X);
-	for (var i = 0; i < arr.length; i++) arr[i] = new Array(Y);
-	for (let i = 0; i < X; i++) {
-		for (let j = 0; j < Y; j++) {
-			arr[i][j] = Math.round(nodeArray[i][j].hCost * 100) / 100;
-		}
-	}
-	console.table(arr);
 }
 
 export { init, doStep, reset };
