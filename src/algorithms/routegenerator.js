@@ -15,6 +15,10 @@ function setDistanceCell(x, y, value) {
 	distanceArr[x][y] = value;
 }
 
+function setDistanceArr(arr) {
+	distanceArr = arr;
+}
+
 let x;
 let y;
 
@@ -83,5 +87,6 @@ export {
 	setDistanceCell,
 	calcRouteStep,
 	firstRouteStep,
+	setDistanceArr,
 	distanceArr,
 };

@@ -21,4 +21,16 @@ function generateArray(value = 100000000) {
 	return arr;
 }
 
-export { checkInBounds, generateArray };
+function getFCost(nodeArray) {
+	var arr = new Array(grid.X);
+	for (var i = 0; i < arr.length; i++) arr[i] = new Array(grid.Y);
+	for (let i = 0; i < grid.X; i++) {
+		for (let j = 0; j < grid.Y; j++) {
+			arr[i][j] = Math.round(nodeArray[i][j].gCost * 100) / 100;
+		}
+	}
+	console.table(arr);
+	return arr;
+}
+
+export { checkInBounds, generateArray, getFCost };
