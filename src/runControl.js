@@ -4,6 +4,7 @@ import { resetRunningValues } from "./grid/gridManager.js";
 import { generateMaze } from "./algorithms/randomizedDFGenerator.js";
 import * as bfs from "./algorithms/breathFirstSearch.js";
 import * as dfs from "./algorithms/depthFirstSearch.js";
+import * as aStar from "./algorithms/aStar.js";
 import { calcRouteStep } from "./algorithms/routegenerator.js";
 
 const generateMazeBtn = document.getElementById("generateMazeBtn");
@@ -11,6 +12,7 @@ const startBtn = document.getElementById("runBtn");
 const stopBtn = document.getElementById("stopBtn");
 const speedSlider = document.getElementById("speedSlider");
 const algorithmSelector = document.getElementById("AlgorithmSelector");
+const debugBtn = document.getElementById("debugBtn");
 
 export let status = "IDLE";
 export function setStatus(x) {
@@ -47,6 +49,16 @@ function resetAllValues() {
 	resetRunningValues();
 	algReset();
 }
+
+let l = 0;
+debugBtn.addEventListener("click", (e) => {
+	if (l == 0) {
+		aStar.init();
+		l++;
+	} else {
+		aStar.doStep();
+	}
+});
 
 generateMazeBtn.addEventListener("click", (e) => {
 	if (status == "IDLE") {
@@ -100,7 +112,7 @@ startBtn.addEventListener("click", (e) => {
 stopBtn.addEventListener("click", (e) => {
 	switch (status) {
 		case "RUNNING":
-			resetRunningValues();
+			resetAllValues();
 			break;
 
 		case "PAUSED":
@@ -139,7 +151,9 @@ algorithmSelector.addEventListener("change", (e) => {
 			algReset = dfs.reset;
 			break;
 		case "A*":
-			//TODO
+			algDoStep = aStar.doStep;
+			algInit = aStar.init;
+			algReset = aStar.reset;
 			break;
 		default:
 			break;

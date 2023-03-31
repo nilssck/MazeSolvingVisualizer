@@ -7,14 +7,14 @@ function checkInBounds(x, y) {
 	return true;
 }
 
-function generateArray() {
+function generateArray(value = 100000000) {
 	let arr = new Array(grid.X);
 
 	for (var i = 0; i < arr.length; i++) arr[i] = new Array(grid.Y);
 
 	for (let i = 0; i < grid.X; i++) {
 		for (let j = 0; j < grid.Y; j++) {
-			arr[i][j] = 1000000;
+			arr[i][j] = value;
 		}
 	}
 
