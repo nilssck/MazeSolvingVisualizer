@@ -3,12 +3,13 @@ import { renderGrid } from "../grid/gridRenderer.js";
 import { checkInBounds, generateArray } from "./helperFunctions.js";
 import { setStatus } from "../runControl.js";
 import * as routeGen from "./routegenerator.js";
-import { MinHeap } from "./datastructures/minHeap.js";
+import { MinHeap } from "./datastructures/MinHeap.js";
 
 class Node {
 	constructor(x, y, fCost, gCost) {
 		this.gCost = 10000000; //distance from start
-		this.hCost = 10000000; //thistance from end
+		this.hCost = 10000000; //manhattan distance from end
+		//this.eCost = 10000000; //eucledian distance from end
 		this.fCost = this.gCost + this.hCost; // sum
 		this.x = x;
 		this.y = y;
@@ -28,13 +29,16 @@ function init() {
 	for (let i = 0; i < X; i++) {
 		for (let j = 0; j < Y; j++) {
 			nodeArray[i][j] = new Node(i, j);
-			nodeArray[i][j].hCost = getDistance([i, j], end);
+			nodeArray[i][j].hCost =
+				getManhattanDistance([i, j], end) +
+				getEucledianDistance([i, j], end) / (X + Y);
+			//nodeArray[i][j].eCost = getEucledianDistance([i, j], end);
 		}
 	}
 
 	//Set g cost of start node and add it to open list
 	nodeArray[start[0]][start[1]].gCost = 0;
-	nodeArray[start[0]][start[1]].fCost = getDistance(start, end);
+	nodeArray[start[0]][start[1]].fCost = getManhattanDistance(start, end);
 
 	openList.add(nodeArray[start[0]][start[1]]);
 
@@ -111,7 +115,8 @@ function expand(x, y) {
 	// g-Wert für den neuen Weg berechnen: g-Wert des Vorgängers plus
 	// die Kosten der gerade benutzten Kante
 	let tentativeG =
-		currentNode.gCost + getDistance([currentNode.x, currentNode.y], [x, y]);
+		currentNode.gCost +
+		getManhattanDistance([currentNode.x, currentNode.y], [x, y]);
 
 	// wenn der Nachfolgeknoten bereits auf der Open List ist,
 	// aber der neue Weg nicht besser ist als der alte – tue nichts
@@ -130,9 +135,12 @@ function expand(x, y) {
 	else openList.add(nodeArray[x][y]);
 }
 
-function getDistance(a, b) {
+function getEucledianDistance(a, b) {
+	return Math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2);
+}
+
+function getManhattanDistance(a, b) {
 	return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
-	//return Math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2);
 }
 
 function logfCost() {
@@ -140,7 +148,7 @@ function logfCost() {
 	for (var i = 0; i < arr.length; i++) arr[i] = new Array(Y);
 	for (let i = 0; i < X; i++) {
 		for (let j = 0; j < Y; j++) {
-			arr[i][j] = Math.round(nodeArray[i][j].fCost * 100) / 100;
+			arr[i][j] = Math.round(nodeArray[i][j].hCost * 100) / 100;
 		}
 	}
 	console.table(arr);

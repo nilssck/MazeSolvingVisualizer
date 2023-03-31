@@ -4,7 +4,8 @@ import { resetRunningValues } from "./grid/gridManager.js";
 import { generateMaze } from "./algorithms/randomizedDFGenerator.js";
 import * as bfs from "./algorithms/breathFirstSearch.js";
 import * as dfs from "./algorithms/depthFirstSearch.js";
-import * as aStar from "./algorithms/aStar.js";
+import * as aStarM from "./algorithms/AStar.js";
+import * as aStarO from "./algorithms/optimizedAStar.js";
 import { calcRouteStep } from "./algorithms/routegenerator.js";
 
 const generateMazeBtn = document.getElementById("generateMazeBtn");
@@ -150,10 +151,15 @@ algorithmSelector.addEventListener("change", (e) => {
 			algInit = dfs.init;
 			algReset = dfs.reset;
 			break;
-		case "A*":
-			algDoStep = aStar.doStep;
-			algInit = aStar.init;
-			algReset = aStar.reset;
+		case "A*M":
+			algDoStep = aStarM.doStep;
+			algInit = aStarM.init;
+			algReset = aStarM.reset;
+			break;
+		case "A*O":
+			algDoStep = aStarO.doStep;
+			algInit = aStarO.init;
+			algReset = aStarO.reset;
 			break;
 		default:
 			break;
