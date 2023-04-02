@@ -1,6 +1,8 @@
 import * as grid from "../grid/gridManager.js";
-import { renderGrid } from "../grid/gridRenderer.js";
+import { cellsize, renderGrid } from "../grid/gridRenderer.js";
 import { setStatus } from "../runControl.js";
+
+const cellSizeSlider = document.getElementById("cellSizeSlider");
 
 function isVisited(x, y) {
 	let result = false;
@@ -99,6 +101,7 @@ async function generate(currentCell) {
 	}
 
 	setStatus("IDLE");
+	cellSizeSlider.disabled = false;
 }
 
 export { generateMaze };
