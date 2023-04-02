@@ -1,4 +1,4 @@
-import { renderGrid } from "./grid/gridRenderer.js";
+import { cellsize, renderGrid } from "./grid/gridRenderer.js";
 import { initArray } from "./grid/gridManager.js";
 import { resetRunningValues, X, Y } from "./grid/gridManager.js";
 import { generateMaze } from "./algorithms/randomizedDFGenerator.js";
@@ -16,6 +16,7 @@ const algorithmSelector = document.getElementById("AlgorithmSelector");
 const statIterations = document.getElementById("statIterations");
 const statRouteLength = document.getElementById("statRouteLength");
 const statDiscovered = document.getElementById("statDiscovered");
+const cellSizeSlider = document.getElementById("cellSizeSlider");
 const debugBtn = document.getElementById("debugBtn");
 
 export let status = "IDLE";
@@ -70,6 +71,7 @@ function resetAllValues() {
 	status = "IDLE";
 	setButtonsPlay();
 	algorithmSelector.disabled = false;
+	cellSizeSlider.disabled = false;
 	resetRunningValues();
 	algReset();
 }
@@ -87,6 +89,7 @@ debugBtn.addEventListener("click", (e) => {
 generateMazeBtn.addEventListener("click", (e) => {
 	if (status == "IDLE") {
 		status == "GENERATING";
+		cellSizeSlider.disabled = true;
 		generateMaze();
 	}
 });
@@ -97,6 +100,7 @@ startBtn.addEventListener("click", (e) => {
 			status = "RUNNING";
 			setButtonsPause();
 			algorithmSelector.disabled = true;
+			cellSizeSlider.disabled = true;
 
 			algInit();
 			run();
