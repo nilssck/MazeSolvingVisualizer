@@ -32,7 +32,26 @@ body {
 
 .controlRow{
     display: grid;
-    grid-template-columns:200px 150px 80px 80px;
+    grid-template-columns:200px 150px 80px 80px 210px;
+
+}
+
+.statBox{
+
+    display: grid;
+    grid-template-rows: 16px 16px 17px;
+    align-content: center;
+    align-items: center;
+    justify-items: start;
+
+    border-radius: 15px;
+    border-color: var(--white);
+    border-style: solid;
+
+    margin: 10px 20px;
+    padding: 5px;
+
+    font-size: 14px;
 }
 
 .sliderBlock {
@@ -112,8 +131,8 @@ button:hover{
 .pictureButton{
     display:inline;
     margin: 10px;
-    width: 65px;
-    height: 65px;
+    width: 70px;
+    height: 70px;
     padding: 0px;
 
     display: flex;

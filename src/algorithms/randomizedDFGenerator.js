@@ -15,7 +15,6 @@ function isVisited(x, y) {
 
 function getNeighbours(x, y) {
 	let neighbours = [];
-	console.log(grid.X / 2);
 
 	//North
 	if (x + 1 < grid.X / 2 - 1 && !isVisited(x + 1, y))
@@ -56,14 +55,12 @@ async function generate(currentCell) {
 	stack.push(currentCell);
 
 	while (stack.length != 0) {
-		console.log(stack);
 		//Pop a cell from the stack and make it a current cell
 		currentCell = stack.pop();
 		grid.removeWall(2 * currentCell[0] + 1, 2 * currentCell[1] + 1);
 
 		//If the current cell has any neighbours which have not been visited
 		var neighbours = getNeighbours(currentCell[0], currentCell[1]);
-		console.log("N:", neighbours);
 
 		if (neighbours.length != 0) {
 			//Push the current cell to the stack
