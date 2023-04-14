@@ -43,6 +43,11 @@ function init() {
 }
 
 function doStep() {
+	if (openList.isempty()) {
+		setStatus("FINISHED");
+		return start;
+	}
+
 	currentNode = openList.remove();
 	let x = currentNode.x;
 	let y = currentNode.y;

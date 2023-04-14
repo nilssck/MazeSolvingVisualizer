@@ -22,6 +22,12 @@ const doStep = function () {
 	//set color of last cell;
 	gridWalls[lastCell[0]][lastCell[1]] = "Checked";
 
+	//stack emtpy, end not found
+	if (stack.length == 0) {
+		setStatus("FINISHED");
+		return start;
+	}
+
 	//get currentCell;
 	const currCell = stack.pop();
 	const x = currCell[0];

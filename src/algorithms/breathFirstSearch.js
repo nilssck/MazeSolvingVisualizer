@@ -22,6 +22,12 @@ const doStep = function () {
 	//set color of last cell;
 	gridWalls[lastCell[0]][lastCell[1]] = "Checked";
 
+	//queue emtpy, end not found
+	if (queue.length == 0) {
+		setStatus("FINISHED");
+		return start;
+	}
+
 	//get currentCell;
 	const currCell = queue.shift();
 	const x = currCell[0];

@@ -237,7 +237,6 @@ async function run() {
 			break;
 		case "FINISHED":
 			audio.stop();
-
 			startBtn.innerHTML =
 				'<img src="icons/icons8-reset-50.png" alt="start"></img>';
 			break;

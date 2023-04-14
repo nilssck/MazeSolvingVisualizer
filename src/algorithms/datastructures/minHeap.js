@@ -40,6 +40,10 @@ export class MinHeap {
 		this.heap[indexTwo] = temp;
 	}
 
+	isempty() {
+		return this.heap.length == 0;
+	}
+
 	peek() {
 		if (this.heap.length === 0) {
 			return null;
