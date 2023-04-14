@@ -35,7 +35,7 @@ const doStep = function () {
 		console.warn("Found End at " + currCell);
 		setStatus("DRAWINGROUTE");
 		routeGen.firstRouteStep(x, y);
-		return;
+		return [x, y];
 	}
 
 	//North
@@ -82,6 +82,8 @@ const doStep = function () {
 	//Update last cell
 	lastCell[0] = x;
 	lastCell[1] = y;
+
+	return [x, y];
 };
 
 const reset = function () {

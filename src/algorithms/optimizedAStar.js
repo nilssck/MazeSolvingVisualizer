@@ -57,7 +57,7 @@ function doStep() {
 		routeGen.setDistanceArr(getFCost(nodeArray));
 		setStatus("DRAWINGROUTE");
 		routeGen.firstRouteStep(x, y);
-		return;
+		return [x, y];
 	}
 
 	//North
@@ -91,6 +91,8 @@ function doStep() {
 	lastCell[1] = y;
 
 	renderGrid();
+
+	return [x, y];
 }
 function reset() {
 	nodeArray;
@@ -117,7 +119,6 @@ function expand(x, y) {
 	if (openList.contains(nodeArray[x][y]) && tentativeG >= nodeArray[x][y].gCost)
 		return;
 
-	//TODO Vorgängerzeiger setzen und g Wert merken oder anpassen
 	nodeArray[x][y].gCost = tentativeG;
 
 	// f-Wert des Knotens in der Open List aktualisieren
@@ -137,4 +138,4 @@ function getManhattanDistance(a, b) {
 	return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
 }
 
-export { init, doStep, reset };
+export { init, doStep, reset, getEucledianDistance };

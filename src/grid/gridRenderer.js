@@ -13,6 +13,7 @@ const RED = "#ff3f34";
 const DARKBLUE = "#3c40c6";
 const LIGHTBLUE = "#575fcf";
 const GREY = "#485460";
+const YELLOW = "#ffd32a";
 
 let cellsize = 24;
 ctx.strokeStyle = WHITE;
@@ -46,7 +47,7 @@ function renderGrid() {
 					fillCell(i, j, RED);
 					break;
 				case "Current":
-					fillCell(i, j, DARKBLUE);
+					fillCell(i, j, YELLOW);
 					break;
 				case "Checked":
 					fillCell(i, j, GREY);
@@ -55,7 +56,7 @@ function renderGrid() {
 					fillCell(i, j, LIGHTBLUE);
 					break;
 				case "Route":
-					fillCell(i, j, RED);
+					fillCell(i, j, YELLOW);
 					break;
 
 				default:
@@ -63,6 +64,9 @@ function renderGrid() {
 			}
 		}
 	}
+
+	fillCell(gridManager.start[0], gridManager.start[1], GREEN);
+	fillCell(gridManager.end[0], gridManager.end[1], RED);
 }
 
 function fillCell(x, y, color) {

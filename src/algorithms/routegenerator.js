@@ -34,7 +34,7 @@ const calcRouteStep = function () {
 	//Start found
 	if (x == start[0] && y == start[1]) {
 		setStatus("FINISHED");
-		return;
+		return [x, y];
 	}
 
 	//North
@@ -44,7 +44,7 @@ const calcRouteStep = function () {
 			gridWalls[x][y + 1] = "Route";
 
 			y++;
-			return;
+			return [x, y];
 		}
 	}
 
@@ -55,7 +55,7 @@ const calcRouteStep = function () {
 			gridWalls[x + 1][y] = "Route";
 
 			x++;
-			return;
+			return [x, y];
 		}
 	}
 
@@ -66,7 +66,7 @@ const calcRouteStep = function () {
 			gridWalls[x][y - 1] = "Route";
 
 			y--;
-			return;
+			return [x, y];
 		}
 	}
 
@@ -77,7 +77,7 @@ const calcRouteStep = function () {
 			gridWalls[x - 1][y] = "Route";
 
 			x--;
-			return;
+			return [x, y];
 		}
 	}
 };

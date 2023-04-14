@@ -55,7 +55,7 @@ function doStep() {
 		routeGen.setDistanceArr(getFCost(nodeArray));
 		setStatus("DRAWINGROUTE");
 		routeGen.firstRouteStep(x, y);
-		return;
+		return [x, y];
 	}
 
 	//North
@@ -89,6 +89,8 @@ function doStep() {
 	lastCell[1] = y;
 
 	renderGrid();
+
+	return [x, y];
 }
 function reset() {
 	nodeArray;

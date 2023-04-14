@@ -7,6 +7,7 @@ import * as dfs from "./algorithms/depthFirstSearch.js";
 import * as aStarM from "./algorithms/AStar.js";
 import * as aStarO from "./algorithms/optimizedAStar.js";
 import { calcRouteStep } from "./algorithms/routegenerator.js";
+import * as audio from "./audiogenerator.js";
 
 const generateMazeBtn = document.getElementById("generateMazeBtn");
 const startBtn = document.getElementById("runBtn");
@@ -23,7 +24,7 @@ export let status = "IDLE";
 export function setStatus(x) {
 	status = x;
 }
-let speed = 100;
+let speed = 32;
 let iterationCount = 0;
 let routeLength = 0;
 
@@ -76,14 +77,11 @@ function resetAllValues() {
 	algReset();
 }
 
-let l = 0;
+let f = 250;
 debugBtn.addEventListener("click", (e) => {
-	if (l == 0) {
-		aStar.init();
-		l++;
-	} else {
-		aStar.doStep();
-	}
+	f *= 1.05;
+	audio.click(f);
+	debugBtn.innerHTML = f;
 });
 
 generateMazeBtn.addEventListener("click", (e) => {
@@ -108,6 +106,8 @@ startBtn.addEventListener("click", (e) => {
 
 		case "RUNNING":
 			status = "PAUSED";
+			audio.stop();
+
 			setButtonsPlay();
 			break;
 
@@ -145,10 +145,13 @@ stopBtn.addEventListener("click", (e) => {
 			resetAllValues();
 			setRouteLength(0);
 			setIterationCount(0);
+			audio.stop();
+
 			break;
 
 		case "PAUSED":
-			algDoStep();
+			var cell = algDoStep();
+			audio.click(cell[0], cell[1]);
 			setIterationCount(iterationCount + 1);
 			break;
 
@@ -201,21 +204,40 @@ algorithmSelector.addEventListener("change", (e) => {
 	}
 });
 
+function handleAudio(cell) {
+	if (speed > 100) {
+		audio.stop();
+		audio.click(cell[0], cell[1]);
+	} else {
+		audio.start();
+		console.log(cell);
+		audio.setFrequency(cell[0], cell[1]);
+	}
+}
+
 async function run() {
 	await new Promise((r) => setTimeout(r, speed));
 
 	switch (status) {
 		case "RUNNING":
-			algDoStep();
+			var cell = algDoStep();
 			setIterationCount(iterationCount + 1);
+
+			handleAudio(cell);
+
 			run();
 			break;
 		case "DRAWINGROUTE":
-			calcRouteStep();
+			cell = calcRouteStep();
+
+			handleAudio(cell);
+
 			setRouteLength(routeLength + 1);
 			run();
 			break;
 		case "FINISHED":
+			audio.stop();
+
 			startBtn.innerHTML =
 				'<img src="icons/icons8-reset-50.png" alt="start"></img>';
 			break;
