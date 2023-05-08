@@ -19,21 +19,43 @@ body {
   background-color: var(--background);
   color: var(--white);
   margin: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1{
+    padding-bottom: 30px;
+}
+
+canvas{
+    margin-top: 10px;
 }
 
 .layoutGrid{
     display: grid;
 
-    grid-template-columns: 800px 200px;
+    height: 400px;
+
+    grid-template-columns: 800px 160px 200px;
     align-content: center;
     justify-content: center;
 
 }
 
 .controlRow{
-    display: grid;
-    grid-template-columns:200px 150px 80px 80px 210px;
+    display: flex;
+    flex-direction: column;
+}
 
+.startStopRow{
+    display: flex;
+    flex-direction: row;
+    width: 180px;
+    height: 90px;
+    margin-left: 10px;
 }
 
 .statBox{
@@ -109,10 +131,9 @@ body {
 }
 
 button{
-    display: block;
-    width: 120px;
+    width: calc(100% - 40px);
     padding: 15px;
-    margin: 10px 20px;
+    margin: 5px 20px;
     
     border-radius: 15px;
      border: none;
@@ -130,10 +151,10 @@ button:hover{
 
 .pictureButton{
     display:inline;
-    margin: 10px;
-    width: 70px;
-    height: 70px;
+    width: 50%;
+
     padding: 0px;
+    margin: 10px;
 
     display: flex;
     flex-wrap: wrap;
@@ -170,9 +191,12 @@ button:hover{
 }
 
 #generateMazeBtn{
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
+#speedSliderBlock{
+    width: 130px;
+}
 
 .brushSwitch{
     background-color: var(--backgroundLight);
@@ -229,10 +253,4 @@ button:hover{
 
 .brushSwitchSelectedToggled{
     left: 60px;
-}
-
-
-#Debug{
-    font-size: 10px;
-    color: var(--backgroundLight);
 }

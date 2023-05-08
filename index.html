@@ -10,7 +10,7 @@
 <body>
 
 
-
+  <h1>Maze Solving Algorithm Visualizer</h1>
 
   <div class="layoutGrid">
     <canvas class="mainGrid" id="mainGrid" width="720" height="360"></canvas>
@@ -64,19 +64,23 @@
         </select>
       </div>
 
-      <div class="sliderBlock">
+      <div class="sliderBlock" id="speedSliderBlock">
         <span>Speed</span>
 
         <input type="range" min="0" max="10" value="5" class="slider" id="speedSlider">
       </div>
 
-      <button id="stopBtn" class="pictureButton">
-        <img src="icons/icons8-next-48.png" alt="start">
-      </button>
+      <div class="startStopRow">
+        <button id="stopBtn" class="pictureButton">
+          <img src="icons/icons8-next-48.png" alt="start">
+        </button>
 
-      <button id="runBtn" class="pictureButton">
-        <img src="icons/icons8-play-30.png" alt="start">
-      </button>
+        <button id="runBtn" class="pictureButton">
+          <img src="icons/icons8-play-30.png" alt="start">
+        </button>
+      </div>
+
+
 
       <div class="statBox">
         <div id="statIterations">Iterations: --</div>
