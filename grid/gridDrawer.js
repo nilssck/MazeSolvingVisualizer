@@ -7,6 +7,7 @@ const brushBtn = document.getElementById("brushBtn");
 const eraseBtn = document.getElementById("eraseBtn");
 const setStartBtn = document.getElementById("setStartBtn");
 const setEndBtn = document.getElementById("setEndBtn");
+const clearBtn = document.getElementById("clearBtn");
 const activeBrushSelector = document.getElementById("activeBrushSelector");
 const cellSizeSlider = document.getElementById("cellSizeSlider");
 
@@ -103,6 +104,11 @@ setStartBtn.addEventListener("click", (e) => {
 setEndBtn.addEventListener("click", (e) => {
 	drawMode = "End";
 	handleHighlightBtn(setEndBtn);
+});
+
+clearBtn.addEventListener("click", (e) => {
+	gridManager.fillArray(0);
+	gridRenderer.renderGrid();
 });
 
 function handleHighlightBtn(btnToHighlight) {
