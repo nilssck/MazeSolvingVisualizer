@@ -5,6 +5,7 @@ import { generateMaze } from "./algorithms/randomizedDFGenerator.js";
 import * as bfs from "./algorithms/breathFirstSearch.js";
 import * as dfs from "./algorithms/depthFirstSearch.js";
 import * as aStar from "./algorithms/aStar.js";
+import * as wallFollower from "./algorithms/wallFollower.js";
 import { calcRouteStep } from "./algorithms/routegenerator.js";
 import * as audio from "./audiogenerator.js";
 
@@ -17,6 +18,7 @@ const statIterations = document.getElementById("statIterations");
 const statRouteLength = document.getElementById("statRouteLength");
 const statDiscovered = document.getElementById("statDiscovered");
 const cellSizeSlider = document.getElementById("cellSizeSlider");
+const clearBtn = document.getElementById("clearBtn");
 
 export let status = "IDLE";
 export function setStatus(x) {
@@ -71,6 +73,8 @@ function resetAllValues() {
 	setButtonsPlay();
 	algorithmSelector.disabled = false;
 	cellSizeSlider.disabled = false;
+	clearBtn.disabled = false;
+
 	resetRunningValues();
 	algReset();
 }
@@ -79,6 +83,7 @@ generateMazeBtn.addEventListener("click", (e) => {
 	if (status == "IDLE") {
 		status == "GENERATING";
 		cellSizeSlider.disabled = true;
+		clearBtn.disabled = true;
 		generateMaze();
 	}
 });
@@ -90,6 +95,7 @@ startBtn.addEventListener("click", (e) => {
 			setButtonsPause();
 			algorithmSelector.disabled = true;
 			cellSizeSlider.disabled = true;
+			clearBtn.disabled = true;
 
 			algInit();
 			run();
@@ -186,6 +192,12 @@ algorithmSelector.addEventListener("change", (e) => {
 			algInit = aStar.init;
 			algReset = aStar.reset;
 			break;
+		case "WallFollower":
+			algDoStep = wallFollower.doStep;
+			algInit = wallFollower.init;
+			algReset = wallFollower.reset;
+			break;
+
 		default:
 			break;
 	}
