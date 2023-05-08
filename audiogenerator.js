@@ -1,12 +1,19 @@
 import { end, X, Y } from "./grid/gridManager.js";
 import { getEucledianDistance } from "./algorithms/optimizedAStar.js";
 
+const enableSoundSwitch = document.getElementById("soundCheckBox");
+enableSoundSwitch.checked = true;
+
 var running = false;
+var muted = false;
 
 var context = new AudioContext();
 var osc = context.createOscillator();
 var gain = context.createGain();
-gain.connect(context.destination);
+var masterGain = context.createGain();
+
+masterGain.connect(context.destination);
+gain.connect(masterGain);
 gain.gain.setValueAtTime(0, context.currentTime);
 osc.connect(gain);
 osc.start(0);
@@ -46,3 +53,16 @@ function calcFrequency(x, y) {
 function lerp(alpha, a, b) {
 	return a + alpha * (b - a);
 }
+
+enableSoundSwitch.addEventListener("click", (e) => {
+	if (!muted) {
+		muted = true;
+		masterGain.gain.exponentialRampToValueAtTime(
+			0.00001,
+			context.currentTime + 0.25
+		);
+	} else {
+		muted = false;
+		masterGain.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.25);
+	}
+});

@@ -76,6 +76,13 @@ canvas{
     font-size: 14px;
 }
 
+.soundLabelBox{
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+}
+
 .sliderBlock {
     display:grid;
     grid-template-rows: 30px 10px;
