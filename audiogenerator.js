@@ -16,10 +16,8 @@ export async function setFrequency(x, y) {
 }
 
 export function start() {
-	//if (!running) {
 	gain.gain.setValueAtTime(0.5, context.currentTime);
 	running = true;
-	// }
 }
 
 export function stop() {

@@ -112,6 +112,7 @@ startBtn.addEventListener("click", (e) => {
 		case "DRAWINGROUTE":
 			status = "DRAWINGROUTEPAUSED";
 			setButtonsPlay();
+			audio.stop();
 			break;
 
 		case "DRAWINGROUTEPAUSED":
