@@ -18,7 +18,6 @@ const statIterations = document.getElementById("statIterations");
 const statRouteLength = document.getElementById("statRouteLength");
 const statDiscovered = document.getElementById("statDiscovered");
 const cellSizeSlider = document.getElementById("cellSizeSlider");
-const debugBtn = document.getElementById("debugBtn");
 
 export let status = "IDLE";
 export function setStatus(x) {
@@ -76,13 +75,6 @@ function resetAllValues() {
 	resetRunningValues();
 	algReset();
 }
-
-let f = 250;
-debugBtn.addEventListener("click", (e) => {
-	f *= 1.05;
-	audio.click(f);
-	debugBtn.innerHTML = f;
-});
 
 generateMazeBtn.addEventListener("click", (e) => {
 	if (status == "IDLE") {
