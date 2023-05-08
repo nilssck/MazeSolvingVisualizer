@@ -3,12 +3,12 @@ import { renderGrid } from "../grid/gridRenderer.js";
 import { checkInBounds, getFCost } from "./helperFunctions.js";
 import { setStatus } from "../runControl.js";
 import * as routeGen from "./routegenerator.js";
-import { MinHeap } from "./datastructures/minHeap.js";
+import { MinHeap } from "./datastructures/MinHeap.js";
 
 class Node {
 	constructor(x, y) {
 		this.gCost = 10000000; //distance from start
-		this.hCost = 10000000; //distance from end
+		this.hCost = 10000000; //manhattan distance from end
 		this.fCost = this.gCost + this.hCost; // sum
 		this.x = x;
 		this.y = y;
@@ -28,13 +28,15 @@ function init() {
 	for (let i = 0; i < X; i++) {
 		for (let j = 0; j < Y; j++) {
 			nodeArray[i][j] = new Node(i, j);
-			nodeArray[i][j].hCost = getDistance([i, j], end);
+			nodeArray[i][j].hCost =
+				getManhattanDistance([i, j], end) +
+				getEucledianDistance([i, j], end) / (X + Y);
 		}
 	}
 
 	//Set g cost of start node and add it to open list
 	nodeArray[start[0]][start[1]].gCost = 0;
-	nodeArray[start[0]][start[1]].fCost = getDistance(start, end);
+	nodeArray[start[0]][start[1]].fCost = getManhattanDistance(start, end);
 
 	openList.add(nodeArray[start[0]][start[1]]);
 
@@ -114,14 +116,14 @@ function expand(x, y) {
 	// g-Wert für den neuen Weg berechnen: g-Wert des Vorgängers plus
 	// die Kosten der gerade benutzten Kante
 	let tentativeG =
-		currentNode.gCost + getDistance([currentNode.x, currentNode.y], [x, y]);
+		currentNode.gCost +
+		getManhattanDistance([currentNode.x, currentNode.y], [x, y]);
 
 	// wenn der Nachfolgeknoten bereits auf der Open List ist,
 	// aber der neue Weg nicht besser ist als der alte – tue nichts
 	if (openList.contains(nodeArray[x][y]) && tentativeG >= nodeArray[x][y].gCost)
 		return;
 
-	//TODO Vorgängerzeiger setzen und g Wert merken oder anpassen
 	nodeArray[x][y].gCost = tentativeG;
 
 	// f-Wert des Knotens in der Open List aktualisieren
@@ -133,8 +135,12 @@ function expand(x, y) {
 	else openList.add(nodeArray[x][y]);
 }
 
-function getDistance(a, b) {
+function getEucledianDistance(a, b) {
+	return Math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2);
+}
+
+function getManhattanDistance(a, b) {
 	return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
 }
 
-export { init, doStep, reset };
+export { init, doStep, reset, getEucledianDistance };

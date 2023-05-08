@@ -1,5 +1,5 @@
 import { end, X, Y } from "./grid/gridManager.js";
-import { getEucledianDistance } from "./algorithms/optimizedAStar.js";
+import { getEucledianDistance } from "./algorithms/aStar.js";
 
 const enableSoundSwitch = document.getElementById("soundCheckBox");
 enableSoundSwitch.checked = true;
