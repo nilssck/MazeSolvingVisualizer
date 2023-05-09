@@ -53,8 +53,6 @@ function setButtonsPause() {
 function setIterationCount(n) {
 	iterationCount = n;
 	const numOfFreeCells = X * Y - getCountOf(1);
-	console.log(numOfFreeCells);
-	console.log(getCountOf("Checked") + 1);
 
 	var perentage =
 		Math.round(((getCountOf("Checked") + 2) / numOfFreeCells) * 1000) / 10;
@@ -214,7 +212,6 @@ function handleAudio(cell) {
 		audio.click(cell[0], cell[1]);
 	} else {
 		audio.start();
-		console.log(cell);
 		audio.setFrequency(cell[0], cell[1]);
 	}
 }

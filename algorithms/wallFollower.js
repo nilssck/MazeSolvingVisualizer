@@ -28,8 +28,6 @@ const doStep = function () {
 	x = nextCell[0];
 	y = nextCell[1];
 
-	console.log(currentDirection);
-
 	//Mark the cell as current;
 	gridWalls[x][y] = "Current";
 
