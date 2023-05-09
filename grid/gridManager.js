@@ -80,6 +80,18 @@ function setEnd(x, y) {
 	gridWalls[x][y] = "E";
 }
 
+function getCountOf(val) {
+	let count = 0;
+
+	gridWalls.forEach((element) => {
+		element.forEach((i) => {
+			if (i == val) count++;
+		});
+	});
+
+	return count;
+}
+
 export {
 	setWall,
 	removeWall,
@@ -88,6 +100,7 @@ export {
 	initArray,
 	fillArray,
 	resetRunningValues,
+	getCountOf,
 	start,
 	end,
 	gridWalls,

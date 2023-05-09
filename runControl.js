@@ -1,6 +1,6 @@
 import { cellsize, renderGrid } from "./grid/gridRenderer.js";
 import { initArray } from "./grid/gridManager.js";
-import { resetRunningValues, X, Y } from "./grid/gridManager.js";
+import { resetRunningValues, X, Y, getCountOf } from "./grid/gridManager.js";
 import { generateMaze } from "./algorithms/randomizedDFGenerator.js";
 import * as bfs from "./algorithms/breathFirstSearch.js";
 import * as dfs from "./algorithms/depthFirstSearch.js";
@@ -52,7 +52,12 @@ function setButtonsPause() {
 
 function setIterationCount(n) {
 	iterationCount = n;
-	var perentage = Math.round((iterationCount / (X * Y)) * 1000) / 10;
+	const numOfFreeCells = X * Y - getCountOf(1);
+	console.log(numOfFreeCells);
+	console.log(getCountOf("Checked") + 1);
+
+	var perentage =
+		Math.round(((getCountOf("Checked") + 2) / numOfFreeCells) * 1000) / 10;
 	if (iterationCount == 0) {
 		statIterations.innerHTML = "Iterations: --";
 		statDiscovered.innerHTML = "Discovered: --";
