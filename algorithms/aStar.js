@@ -3,7 +3,7 @@ import { renderGrid } from "../grid/gridRenderer.js";
 import { checkInBounds, getFCost } from "./helperFunctions.js";
 import { setStatus } from "../runControl.js";
 import * as routeGen from "./routegenerator.js";
-import { MinHeap } from "/datastructures/MinHeap.js";
+import { MinHeap } from "./datastructures/MinHeap.js";
 
 class Node {
 	constructor(x, y) {
