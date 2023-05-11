@@ -2,21 +2,35 @@ import { end, X, Y } from "./grid/gridManager.js";
 import { getEucledianDistance } from "./algorithms/aStar.js";
 
 const enableSoundSwitch = document.getElementById("soundCheckBox");
-enableSoundSwitch.checked = true;
 
 var running = false;
-var muted = false;
+var muted = true;
+var init = false;
 
 var context = new AudioContext();
 var osc = context.createOscillator();
 var gain = context.createGain();
 var masterGain = context.createGain();
 
-masterGain.connect(context.destination);
-gain.connect(masterGain);
-gain.gain.setValueAtTime(0, context.currentTime);
-osc.connect(gain);
-osc.start(0);
+enableSoundSwitch.addEventListener("click", (e) => {
+	if (!init) {
+		masterGain.connect(context.destination);
+		gain.connect(masterGain);
+		gain.gain.setValueAtTime(0, context.currentTime);
+		osc.connect(gain);
+		osc.start(0);
+	}
+	if (!muted) {
+		muted = true;
+		masterGain.gain.exponentialRampToValueAtTime(
+			0.00001,
+			context.currentTime + 0.25
+		);
+	} else {
+		muted = false;
+		masterGain.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.25);
+	}
+});
 
 export async function setFrequency(x, y) {
 	osc.frequency.value = calcFrequency(x, y);
@@ -53,16 +67,3 @@ function calcFrequency(x, y) {
 function lerp(alpha, a, b) {
 	return a + alpha * (b - a);
 }
-
-enableSoundSwitch.addEventListener("click", (e) => {
-	if (!muted) {
-		muted = true;
-		masterGain.gain.exponentialRampToValueAtTime(
-			0.00001,
-			context.currentTime + 0.25
-		);
-	} else {
-		muted = false;
-		masterGain.gain.exponentialRampToValueAtTime(1, context.currentTime + 0.25);
-	}
-});
