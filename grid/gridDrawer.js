@@ -1,5 +1,6 @@
 import * as gridRenderer from "./gridRenderer.js";
 import * as gridManager from "./gridManager.js";
+import { status } from "../runControl.js";
 
 const canvas = document.getElementById("mainGrid");
 
@@ -27,6 +28,8 @@ canvas.addEventListener("mousemove", (e) => {
 canvas.addEventListener("mousedown", draw);
 
 function draw(e) {
+	if (status != "IDLE") return;
+
 	let mousePos = {};
 	//get position
 	mousePos.x = e.x - canvas.getBoundingClientRect().left;
