@@ -35,11 +35,12 @@ canvas{
 }
 
 .layoutGrid{
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
 
-    height: 400px;
+    width: 100vw;
 
-    grid-template-columns: 800px 160px 200px;
+
     align-content: center;
     justify-content: center;
 
@@ -49,6 +50,12 @@ canvas{
     display: flex;
     flex-direction: column;
 }
+.inputRow {
+    display: flex;
+    flex-direction: column;
+}
+
+
 
 .startStopRow{
     display: flex;
@@ -138,7 +145,7 @@ canvas{
 }
 
 button{
-    width: calc(100% - 40px);
+    width: 120px;
     padding: 15px;
     margin: 5px 20px;
     
